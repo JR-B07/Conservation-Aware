@@ -1,63 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Inicio</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Conservation Aware</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: deepskyblue;
+        .navbar-custom {
+            background-color: #ffffff;
         }
-        .container {
-            margin-top: 50px;
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #000000;
         }
-        .jumbotron {
-            background-color: dodgerblue;
+        .navbar-custom .nav-link:hover {
+            color: mediumspringgreen;
+        }
+        
+        .hero-section {
+            background-image: url('https://png.pngtree.com/background/20230412/original/pngtree-nature-forest-leaves-green-picture-image_2396860.jpg'); /* Reemplaza con la URL de tu imagen */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Conservation Aware</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/registro">Sobre nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/consultar_medicos">Animales</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/consultar_medicos">Donar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/consultar_medicos">Asociaciones</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
 
-        <div class="jumbotron">
-            <h1 class="display-4">¡Bienvenido a Conservation Aware</h1>
-            <p class="lead">Conciencia que inspira, acciones que salvan.</p>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Conservation Aware</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="sobre_nosotros.html">Sobre nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#animales">Animales</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#donar">Donar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#asociaciones">Asociaciones</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+ 
+    <div class="hero-section">
+        <div>
+            <h1>Bienvenido a Conservation Aware!</h1>
+            <p>Conciencia que inspira, acciones que salvan.</p>
+            <a href="sobre_nosotros.html" class="btn btn-primary">Acerca de</a>
         </div>
     </div>
 
+ 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
