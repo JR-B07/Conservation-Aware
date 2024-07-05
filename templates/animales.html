@@ -6,44 +6,35 @@
     <title>Animales - Conservation Aware</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .navbar-custom {
-            background-color: #ffffff;
-        }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link {
-            color: #000000;
-        }
-        .navbar-custom .nav-link:hover {
-            color: mediumspringgreen;
-        }
         .animals-section {
             padding: 60px 0;
+            text-align: center;
         }
         .animal-card {
-            border-radius: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px;
+            text-align: left;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            padding: 20px;
-            margin-bottom: 20px;
         }
         .animal-card img {
             max-width: 100%;
             height: auto;
-            border-radius: 15px;
+            border-radius: 10px;
         }
-        footer {
-            background-color: #343a40;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
+        .animal-card h3 {
+            margin-top: 15px;
+            font-size: 1.5rem;
+        }
+        .animal-card p {
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-
-   
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand" href="index.html">Conservation Aware</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Conservation Aware</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -56,63 +47,37 @@
                     <a class="nav-link" href="animales.html">Animales</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html#donar">Donar</a>
+                    <a class="nav-link" href="/donar">Donar</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html#asociaciones">Asociaciones</a>
+                    <a class="nav-link" href="/asociaciones">Asociaciones</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    
     <section id="animales" class="animals-section">
         <div class="container">
             <h2 class="text-center mb-4">Animales</h2>
             <div class="row">
+                {% for animal in animales %}
                 <div class="col-md-4">
                     <div class="animal-card">
-                        <img src="https://cdn.unotv.com/images/2023/12/leopardo-de-las-praderas-tibet-124340.jpg" alt="Jaguar">
-                        <h3>Jaguar</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mollitia autem animi voluptates omnis repudiandae voluptatum delectus quas, cupiditate quia obcaecati vitae amet cumque officiis. Doloremque inventore perspiciatis sequi ullam.</p>
+                        <img src="{{ animal.image_url }}" alt="{{ animal.common_name }}">
+                        <h3>{{ animal.common_name }}</h3>
+                        <p><strong>Nombre Científico:</strong> {{ animal.scientific_name }}</p>
+                        <p>{{ animal.description }}</p>
+                        <p><strong>Población Estimada:</strong> {{ animal.estimated_population }}</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="animal-card">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5DcLNH6hb0G2LYFO_tJ8woeK-O4vE8Gvtfg&s" alt="Quetzal">
-                        <h3>Quetzal</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mollitia autem animi voluptates omnis repudiandae voluptatum delectus quas, cupiditate quia obcaecati vitae amet cumque officiis. Doloremque inventore perspiciatis sequi ullam.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="animal-card">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTwUgDHcl9FD8gRfL4A_tC3wNtYIEyUFLIZw&s" alt="Ajolote (Xochimilco)">
-                        <h3>Ajolote (Xochimilco)</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mollitia autem animi voluptates omnis repudiandae voluptatum delectus quas, cupiditate quia obcaecati vitae amet cumque officiis. Doloremque inventore perspiciatis sequi ullam.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="animal-card">
-                        <img src="https://static.nationalgeographicla.com/files/styles/image_3200/public/05_nationalgeographic_2711495.jpg?w=839&h=839" alt="Lobo Gris">
-                        <h3>Lobo Gris</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mollitia autem animi voluptates omnis repudiandae voluptatum delectus quas, cupiditate quia obcaecati vitae amet cumque officiis. Doloremque inventore perspiciatis sequi ullam.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="animal-card">
-                        <img src="https://conanp.gob.mx/conanp/dominios/especies/WEB/img/fichas/aguila-real.png" alt="Aguila Real">
-                        <h3>Aguila Real</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Mollitia autem animi voluptates omnis repudiandae voluptatum delectus quas, cupiditate quia obcaecati vitae amet cumque officiis. Doloremque inventore perspiciatis sequi ullam.</p>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
 
-
     <footer>
         <div class="container">
-            <p>Página creada por: Aguilón Torrijos Estrella, García Martínez Briseida, Martínez Cabrera José Ángel, Becerra Covarrubias José Ricardo, Mendoza Hernández Marcos Adrián, Morales Flores Alan Iván, Ramírez Ortiz Axel Gabriel</p>
+            <p>Página creada por: Aguilón Torrijos Estrella, García Martínez Briseida, Martínez Cabrera José Ángel, Mendoza Hernández Marcos Adrián, Morales Flores Alan Iván, Ramírez Ortiz Axel Gabriel</p>
         </div>
     </footer>
 
