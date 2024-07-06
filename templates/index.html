@@ -19,6 +19,9 @@
       .navbar-custom .nav-link:hover {
         color: mediumspringgreen;
       }
+      body {
+        background-color: #f8f9fa;
+      }
       .hero-section {
         background-image: url("https://png.pngtree.com/background/20230412/original/pngtree-nature-forest-leaves-green-picture-image_2396860.jpg");
         background-size: cover;
@@ -33,7 +36,7 @@
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-custom">
       <a class="navbar-brand" href="{{ url_for('index') }}"
         >Conservation Aware</a
       >

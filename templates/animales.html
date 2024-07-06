@@ -9,6 +9,19 @@
       rel="stylesheet"
     />
     <style>
+      .navbar-custom {
+        background-color: #ffffff;
+      }
+      .navbar-custom .navbar-brand,
+      .navbar-custom .nav-link {
+        color: #000000;
+      }
+      .navbar-custom .nav-link:hover {
+        color: mediumspringgreen;
+      }
+      body {
+        background-color: #f8f9fa;
+      }
       .animals-section {
         padding: 60px 0;
         text-align: center;
@@ -36,7 +49,7 @@
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-custom">
       <a class="navbar-brand" href="{{ url_for('index') }}"
         >Conservation Aware</a
       >
@@ -80,11 +93,19 @@
           {% for animal in animals %}
           <div class="col-md-4">
             <div class="animal-card">
-              <img src="{{ animal[5] }}" alt="{{ animal[1] }}" />
-              <h3>{{ animal[1] }}</h3>
-              <p><strong>Nombre Científico:</strong> {{ animal[2] }}</p>
-              <p>{{ animal[3] }}</p>
-              <p><strong>Población Estimada:</strong> {{ animal[4] }}</p>
+              {% if animal[0] == "Lince" %}
+              <img src="URL_DE_LA_IMAGEN_DEL_LINCE" alt="{{ animal[0] }}" />
+              {% elif animal[0] == "Tortuga" %}
+              <img src="URL_DE_LA_IMAGEN_DE_LA_TORTUGA" alt="{{ animal[0] }}" />
+              {% elif animal[0] == "Zorro" %}
+              <img src="URL_DE_LA_IMAGEN_DEL_ZORO" alt="{{ animal[0] }}" />
+              {% else %}
+              <img src="URL_POR_DEFECTO" alt="{{ animal[0] }}" />
+              {% endif %}
+              <h3>{{ animal[0] }}</h3>
+              <p><strong>Nombre Científico:</strong> {{ animal[1] }}</p>
+              <p>{{ animal[2] }}</p>
+              <p><strong>Población Estimada:</strong> {{ animal[3] }}</p>
             </div>
           </div>
           {% endfor %}
