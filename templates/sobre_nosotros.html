@@ -1,71 +1,132 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conservation Aware</title>
-
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sobre Nosotros - Conservation Aware</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-        .navbar-custom {
-            background-color: #ffffff;
-        }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link {
-            color: #000000;
-        }
-        .navbar-custom .nav-link:hover {
-            color: mediumspringgreen;
-        }
-        
-        .hero-section {
-            background-image: url('https://png.pngtree.com/background/20230412/original/pngtree-nature-forest-leaves-green-picture-image_2396860.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
+      .navbar-custom {
+        background-color: #ffffff;
+      }
 
+      .navbar-custom .navbar-brand,
+      .navbar-custom .nav-link {
+        color: #000000;
+      }
+
+      .navbar-custom .nav-link:hover {
+        color: mediumspringgreen;
+      }
+
+      .about-section {
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      .about-content {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .about-text {
+        flex: 1;
+        padding: 20px;
+        text-align: justify;
+      }
+
+      .about-image {
+        flex: 1;
+        text-align: center;
+      }
+
+      .about-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Conservation Aware</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="sobre_nosotros.html">Sobre nosotros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="animales.html">Animales</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/donar">Donar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/asociaciones">Asociaciones</a>
-                </li>
-            </ul>
-        </div>
+      <a class="navbar-brand" href="/">Conservation Aware</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/sobre_nosotros">Sobre nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/animales">Animales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/donar">Donar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/asociaciones">Asociaciones</a>
+          </li>
+        </ul>
+      </div>
     </nav>
 
-    <div class="hero-section">
-        <div>
-            <h1>Bienvenido a Conservation Aware!</h1>
-            <p>Conciencia que inspira, acciones que salvan.</p>
-            <a href="/sobre_nosotros" class="btn btn-primary">Acerca de</a>
+    <section class="about-section">
+      <div class="container">
+        <h2 class="text-center mb-4">Conservation Aware</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p>
+              En el planeta existen más de 77 millones de especies de animales y
+              más del 20% están en peligro de extinción. Es cierto que las
+              causas del porqué de la extinción de una especie pueden ser
+              específicas para cada una, pero en general se encuentra la
+              destrucción y fragmentación de sus hábitats; el cambio climático,
+              la caza y tráfico ilegal; y la introducción de especies exóticas.
+              Sin embargo, la falta de conciencia y conocimiento sobre estas
+              especies en peligro de extinción se está convirtiendo en un
+              obstáculo importante para su protección.
+            </p>
+          </div>
+          <div class="about-image">
+            <img
+              src="https://via.placeholder.com/300"
+              alt="Animal en peligro de extinción"
+            />
+          </div>
+          <div class="about-text">
+            <p>
+              Conservation Aware es un proyecto que se dedica a abordar esta
+              problemática. Lo que se busca es fomentar una cultura de
+              conocimiento respecto a estas especies. Para lograr este objetivo,
+              se desarrollará una página web donde las personas podrán encontrar
+              y conocer datos detallados sobre estas especies, incluyendo
+              información sobre su hábitat, alimentación, comportamiento y
+              amenazas a su supervivencia. Además de esto, se establecerá un
+              espacio donde las personas podrán donar para apoyar a las
+              organizaciones comprometidas con la preservación de estas especies
+              en peligro de extinción.
+            </p>
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>

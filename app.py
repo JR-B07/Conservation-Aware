@@ -1,4 +1,3 @@
-from flask import *
 from flask import Flask, flash, redirect, request, render_template, url_for
 from flask_mysqldb import MySQL
 
@@ -27,9 +26,9 @@ def animales():
     try:
         cursor = mysql.connection.cursor()
         cursor.execute("SELECT * FROM animals")
-        animales = cursor.fetchall()
+        animals = cursor.fetchall()
         cursor.close()
-        return render_template('animales.html', animals=animales)
+        return render_template('animales.html', animals=animals)
     except Exception as e:
         print(e)
         flash('Error al obtener los datos de la base de datos', 'error')
@@ -44,63 +43,6 @@ def donar():
 @app.route('/asociaciones')
 def asociaciones():
     return render_template('asociaciones.html')
-
-
-@app.route('/guardarAnimal', methods=['POST'])
-def guardarAnimal():
-    if request.method == 'POST':
-        common_name = request.form['common_name']
-        scientific_name = request.form['scientific_name']
-        description = request.form['description']
-        estimated_population = request.form['estimated_population']
-        image_url = request.form['image_url']
-        try:
-            cursor = mysql.connection.cursor()
-            cursor.execute(
-                "INSERT INTO animals (common_name, scientific_name, description, estimated_population, image_url) VALUES (%s, %s, %s, %s, %s)",
-                (common_name, scientific_name, description, estimated_population, image_url))
-            mysql.connection.commit()
-            flash('Animal guardado correctamente')
-            return redirect(url_for('animales'))
-        except Exception as e:
-            print(e)
-            flash('Error al guardar en la base de datos', 'error')
-            return redirect(url_for('animales'))
-
-
-@app.route('/editar/<int:id>')
-def editar(id):
-    try:
-        cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM animals WHERE id=%s', [id])
-        animal = cursor.fetchone()
-        return render_template('editar.html', animal=animal)
-    except Exception as e:
-        print(e)
-        return "Error al realizar la consulta", 500
-
-
-@app.route('/ActualizarAnimal/<int:id>', methods=['POST'])
-def ActualizarAnimal(id):
-    if request.method == 'POST':
-        try:
-            common_name = request.form['common_name']
-            scientific_name = request.form['scientific_name']
-            description = request.form['description']
-            estimated_population = request.form['estimated_population']
-            image_url = request.form['image_url']
-
-            cursor = mysql.connection.cursor()
-            cursor.execute(
-                'UPDATE animals SET common_name=%s, scientific_name=%s, description=%s, estimated_population=%s, image_url=%s WHERE id=%s',
-                (common_name, scientific_name, description, estimated_population, image_url, id))
-            mysql.connection.commit()
-            flash('Animal editado correctamente')
-            return redirect(url_for('animales'))
-        except Exception as e:
-            print(e)
-            flash('Error al actualizar el animal', 'error')
-            return redirect(url_for('editar', id=id))
 
 
 @app.errorhandler(404)

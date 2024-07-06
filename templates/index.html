@@ -1,71 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conservation Aware</title>
-
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-        .navbar-custom {
-            background-color: #ffffff;
-        }
-        .navbar-custom .navbar-brand,
-        .navbar-custom .nav-link {
-            color: #000000;
-        }
-        .navbar-custom .nav-link:hover {
-            color: mediumspringgreen;
-        }
-        
-        .hero-section {
-            background-image: url('https://png.pngtree.com/background/20230412/original/pngtree-nature-forest-leaves-green-picture-image_2396860.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-        }
+      .navbar-custom {
+        background-color: #ffffff;
+      }
+      .navbar-custom .navbar-brand,
+      .navbar-custom .nav-link {
+        color: #000000;
+      }
+      .navbar-custom .nav-link:hover {
+        color: mediumspringgreen;
+      }
+      .hero-section {
+        background-image: url("https://png.pngtree.com/background/20230412/original/pngtree-nature-forest-leaves-green-picture-image_2396860.jpg");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Conservation Aware</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="sobre_nosotros.html">Sobre nosotros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="animales.html">Animales</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/donar">Donar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/asociaciones">Asociaciones</a>
-                </li>
-            </ul>
-        </div>
+      <a class="navbar-brand" href="{{ url_for('index') }}"
+        >Conservation Aware</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('sobre_nosotros') }}"
+              >Sobre nosotros</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('animales') }}">Animales</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('donar') }}">Donar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('asociaciones') }}"
+              >Asociaciones</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <div class="hero-section">
-        <div>
-            <h1>Bienvenido a Conservation Aware!</h1>
-            <p>Conciencia que inspira, acciones que salvan.</p>
-            <a href="/sobre_nosotros" class="btn btn-primary">Acerca de</a>
-        </div>
+      <div>
+        <h1>Bienvenido a Conservation Aware!</h1>
+        <p>Conciencia que inspira, acciones que salvan.</p>
+        <a href="{{ url_for('sobre_nosotros') }}" class="btn btn-primary"
+          >Acerca de</a
+        >
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>
