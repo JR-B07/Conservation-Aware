@@ -16,9 +16,9 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/sobre_nosotros')
-def sobre_nosotros():
-    return render_template('sobre_nosotros.html')
+@app.route('/LosQFD')
+def LosQFD():
+    return render_template('LosQFD.html')
 
 
 @app.route('/animales')
