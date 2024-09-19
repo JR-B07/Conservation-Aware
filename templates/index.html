@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conservation Aware</title>
+    <title>CASA DE LA CALIDAD</title>
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -33,6 +33,16 @@
         color: white;
         text-align: center;
       }
+      .title-section {
+        background-color: #d1b3ff; /* Morado más claro */
+        text-align: center;
+        padding: 40px; /* Aumenta el padding para el tamaño del rectángulo */
+        color: #000000;
+        font-weight: bold;
+        width: 50%; /* Ajusta el ancho del rectángulo */
+        margin: 0 auto; /* Centra el rectángulo */
+        border-radius: 10px; /* Bordes redondeados */
+      }
     </style>
   </head>
   <body>
@@ -40,6 +50,8 @@
       <a class="navbar-brand" href="{{ url_for('index') }}"
         >LA CASA DE LA CALIDAD</a
       >
+
+      <!--BARRA DE NAVEGACION-->
       <button
         class="navbar-toggler"
         type="button"
@@ -56,15 +68,22 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('LosQFD') }}">Acerca de</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/tabla">Tabla</a>
+            <!-- Enlace para la tabla de médicos -->
+          </li>
         </ul>
       </div>
     </nav>
 
+    <!-- Nueva sección para el título con barra morada clara -->
+    <div class="title-section">
+      <h1>¡BIENVENIDO A LA CASA DE LA CALIDAD!</h1>
+    </div>
+
     <div class="hero-section">
       <div>
-        <h1>BIENVENIDOA A LA CASA DE LA CALIDAD!</h1>
-        <p>FRASE MAMADORA.TXT</p>
-        <a href="{{ url_for('LosQFD') }}" class="btn btn-primary">Acerca de</a>
+        <h1></h1>
       </div>
     </div>
 

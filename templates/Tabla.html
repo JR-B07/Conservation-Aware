@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabla Interactiva</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      table {
+        text-align: center;
+      }
+      th,
+      td {
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <a class="navbar-brand" href="{{ url_for('index') }}"
+        >LA CASA DE LA CALIDAD</a
+      >
+
+      <!--BARRA DE NAVEGACION-->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('LosQFD') }}">Acerca de</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/tabla">Tabla</a>
+            <!-- Enlace para la tabla de médicos -->
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <h2 class="mb-4 text-center">Tabla Interactiva de Factores</h2>
+      <form id="tabla-form" method="POST" action="/guardar">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th rowspan="2">PRIORIDAD</th>
+              <th rowspan="2">Características</th>
+              <th colspan="7">Proceso</th>
+            </tr>
+            <tr>
+              <th>Recepción del maíz</th>
+              <th>Almacenaje</th>
+              <th>Elaboración</th>
+              <th>Lavado</th>
+              <th>Molienda</th>
+              <th>Deshidratado</th>
+              <th>Envasado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for fila in tabla_datos %}
+            <tr>
+              <td>{{ fila.prioridad }}</td>
+              <td>{{ fila.caracteristica }}</td>
+              {% for valor in fila.valores %}
+              <td>
+                <input
+                  type="number"
+                  name="valor_{{loop.index0}}_{{loop.parent.index0}}"
+                  value="{{ valor }}"
+                  class="form-control"
+                />
+              </td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="text-center">
+          <button type="submit" class="btn btn-success">
+            Guardar en Excel
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
