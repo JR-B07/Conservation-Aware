@@ -29,27 +29,43 @@
   </head>
   <body>
     <form id="tableForm">
-      <table>
+      <table id="interactiveTable">
         <thead>
           <tr>
             <th rowspan="2" class="header-group">Aspecto</th>
             <th colspan="9" class="header-group">Etapas del Proceso</th>
           </tr>
           <tr>
-            <th class="sub-header">Recepción del maíz</th>
-            <th class="sub-header">Almacenaje del maíz</th>
-            <th class="sub-header">Elaboración de la masa</th>
-            <th class="sub-header">Lavado y escurrido de masa</th>
-            <th class="sub-header">Moldeado y prensado de tortilla</th>
-            <th class="sub-header">Cocción y deshidratación</th>
-            <th class="sub-header">Lavado y almacenamiento</th>
-            <th class="sub-header">Empaque y almacenamiento</th>
-            <th class="sub-header">Resultado Interno</th>
+            <th class="sub-header" contenteditable="true">
+              Recepción del maíz
+            </th>
+            <th class="sub-header" contenteditable="true">
+              Almacenaje del maíz
+            </th>
+            <th class="sub-header" contenteditable="true">
+              Elaboración de la masa
+            </th>
+            <th class="sub-header" contenteditable="true">
+              Lavado y escurrido de masa
+            </th>
+            <th class="sub-header" contenteditable="true">
+              Moldeado y prensado de tortilla
+            </th>
+            <th class="sub-header" contenteditable="true">
+              Cocción y deshidratación
+            </th>
+            <th class="sub-header" contenteditable="true">
+              Lavado y almacenamiento
+            </th>
+            <th class="sub-header" contenteditable="true">
+              Empaque y almacenamiento
+            </th>
+            <th class="sub-header" contenteditable="true">Resultado Interno</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Color</td>
+            <td contenteditable="true">Color</td>
             <td contenteditable="true">5</td>
             <td contenteditable="true">5</td>
             <td contenteditable="true">5</td>
@@ -60,17 +76,81 @@
             <td contenteditable="true">1</td>
             <td contenteditable="true">5</td>
           </tr>
-          <!-- Más filas como esta -->
+          <tr>
+            <td contenteditable="true">Sabor</td>
+            <td contenteditable="true">3</td>
+            <td contenteditable="true">15</td>
+            <td contenteditable="true">15</td>
+            <td contenteditable="true">25</td>
+            <td contenteditable="true">5</td>
+            <td contenteditable="true">25</td>
+            <td contenteditable="true">3</td>
+            <td contenteditable="true">3</td>
+            <td contenteditable="true">5</td>
+          </tr>
+          <!-- Agregar más filas aquí -->
         </tbody>
       </table>
-
+      <button type="button" onclick="addRow()">Agregar Fila</button>
+      <button type="button" onclick="addColumn()">Agregar Columna</button>
       <button type="button" onclick="submitTableData()">Guardar Cambios</button>
     </form>
 
     <script>
+      // Función para agregar una nueva fila interactiva
+      function addRow() {
+        const table = document
+          .getElementById("interactiveTable")
+          .getElementsByTagName("tbody")[0];
+        const newRow = document.createElement("tr");
+
+        const columns = table.rows[0].cells.length; // Número de columnas
+        const firstCell = document.createElement("td");
+        firstCell.contentEditable = "true";
+        firstCell.textContent = "Nuevo Aspecto"; // Primer celda será el nombre del nuevo aspecto
+        newRow.appendChild(firstCell);
+
+        for (let i = 1; i < columns; i++) {
+          // Resto de las celdas
+          const newCell = document.createElement("td");
+          newCell.contentEditable = "true";
+          newCell.textContent = "0"; // Valor por defecto
+          newRow.appendChild(newCell);
+        }
+
+        table.appendChild(newRow); // Añadir la nueva fila a la tabla
+      }
+
+      // Función para agregar una nueva columna interactiva
+      function addColumn() {
+        const table = document.getElementById("interactiveTable");
+        const headerRow = table.getElementsByTagName("thead")[0].rows[1]; // Segunda fila de la cabecera
+        const newHeader = document.createElement("th");
+        newHeader.contentEditable = "true";
+        newHeader.className = "sub-header";
+        newHeader.textContent = "Nueva Columna"; // Nombre por defecto de la nueva columna
+        headerRow.appendChild(newHeader);
+
+        const rows = table.getElementsByTagName("tbody")[0].rows;
+        for (let i = 0; i < rows.length; i++) {
+          const newCell = document.createElement("td");
+          newCell.contentEditable = "true";
+          newCell.textContent = "0"; // Valor por defecto
+          rows[i].appendChild(newCell);
+        }
+      }
+
+      // Función para enviar los datos de la tabla al backend
       function submitTableData() {
         const table = document.querySelector("table");
         const tableData = [];
+        const headers = [];
+
+        // Captura de los encabezados
+        table.querySelectorAll("thead tr:nth-child(2) th").forEach((header) => {
+          headers.push(header.innerText);
+        });
+
         table.querySelectorAll("tbody tr").forEach((row) => {
           const rowData = [];
           row.querySelectorAll("td").forEach((cell) => {
@@ -84,7 +164,7 @@
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ data: tableData }),
+          body: JSON.stringify({ headers: headers, data: tableData }),
         })
           .then((response) => {
             if (response.ok) {

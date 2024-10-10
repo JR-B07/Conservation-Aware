@@ -76,7 +76,9 @@ def LosQFD():
 
 @app.route('/update_table', methods=['POST'])
 def update_table():
-    data = request.json.get('data')
+    headers = request.json.get('headers')  # Nombres de las columnas
+    data = request.json.get('data')  # Datos de la tabla
+    print("Encabezados recibidos:", headers)
     print("Datos recibidos:", data)
     # Aquí podrías procesar los datos o almacenarlos en una base de datos
     return jsonify({"status": "success"})
