@@ -1,99 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tabla Interactiva</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
     <style>
       table {
-        text-align: center;
+        width: 100%;
+        border-collapse: collapse;
       }
       th,
       td {
-        vertical-align: middle;
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #a9dfbf; /* Color verde claro */
+      }
+      .header-group {
+        background-color: #229954; /* Color verde oscuro */
+        color: white;
+      }
+      .sub-header {
+        background-color: #58d68d; /* Verde intermedio */
       }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-      <a class="navbar-brand" href="{{ url_for('index') }}"
-        >LA CASA DE LA CALIDAD</a
-      >
+    <form id="tableForm">
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2" class="header-group">Aspecto</th>
+            <th colspan="9" class="header-group">Etapas del Proceso</th>
+          </tr>
+          <tr>
+            <th class="sub-header">Recepción del maíz</th>
+            <th class="sub-header">Almacenaje del maíz</th>
+            <th class="sub-header">Elaboración de la masa</th>
+            <th class="sub-header">Lavado y escurrido de masa</th>
+            <th class="sub-header">Moldeado y prensado de tortilla</th>
+            <th class="sub-header">Cocción y deshidratación</th>
+            <th class="sub-header">Lavado y almacenamiento</th>
+            <th class="sub-header">Empaque y almacenamiento</th>
+            <th class="sub-header">Resultado Interno</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Color</td>
+            <td contenteditable="true">5</td>
+            <td contenteditable="true">5</td>
+            <td contenteditable="true">5</td>
+            <td contenteditable="true">3</td>
+            <td contenteditable="true">5</td>
+            <td contenteditable="true">5</td>
+            <td contenteditable="true">3</td>
+            <td contenteditable="true">1</td>
+            <td contenteditable="true">5</td>
+          </tr>
+          <!-- Más filas como esta -->
+        </tbody>
+      </table>
 
-      <!--BARRA DE NAVEGACION-->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('LosQFD') }}">Acerca de</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/tabla">Tabla</a>
-            <!-- Enlace para la tabla de médicos -->
-          </li>
-        </ul>
-      </div>
-    </nav>
+      <button type="button" onclick="submitTableData()">Guardar Cambios</button>
+    </form>
 
-    <div class="container mt-5">
-      <h2 class="mb-4 text-center">Tabla Interactiva de Factores</h2>
-      <form id="tabla-form" method="POST" action="/guardar">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th rowspan="2">PRIORIDAD</th>
-              <th rowspan="2">Características</th>
-              <th colspan="7">Proceso</th>
-            </tr>
-            <tr>
-              <th>Recepción del maíz</th>
-              <th>Almacenaje</th>
-              <th>Elaboración</th>
-              <th>Lavado</th>
-              <th>Molienda</th>
-              <th>Deshidratado</th>
-              <th>Envasado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for fila in tabla_datos %}
-            <tr>
-              <td>{{ fila.prioridad }}</td>
-              <td>{{ fila.caracteristica }}</td>
-              {% for valor in fila.valores %}
-              <td>
-                <input
-                  type="number"
-                  name="valor_{{loop.index0}}_{{loop.parent.index0}}"
-                  value="{{ valor }}"
-                  class="form-control"
-                />
-              </td>
-              {% endfor %}
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <div class="text-center">
-          <button type="submit" class="btn btn-success">
-            Guardar en Excel
-          </button>
-        </div>
-      </form>
-    </div>
+    <script>
+      function submitTableData() {
+        const table = document.querySelector("table");
+        const tableData = [];
+        table.querySelectorAll("tbody tr").forEach((row) => {
+          const rowData = [];
+          row.querySelectorAll("td").forEach((cell) => {
+            rowData.push(cell.innerText);
+          });
+          tableData.push(rowData);
+        });
+
+        fetch("/update_table", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ data: tableData }),
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Datos enviados exitosamente");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, jsonify
 import pandas as pd
 import os
 
@@ -72,6 +72,14 @@ def guardar():
 @app.route('/LosQFD')
 def LosQFD():
     return render_template('LosQFD.html')
+
+
+@app.route('/update_table', methods=['POST'])
+def update_table():
+    data = request.json.get('data')
+    print("Datos recibidos:", data)
+    # Aquí podrías procesar los datos o almacenarlos en una base de datos
+    return jsonify({"status": "success"})
 
 
 # Ejecutar la aplicación
