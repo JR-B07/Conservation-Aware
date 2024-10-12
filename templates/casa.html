@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Casa de la Calidad</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .navbar-custom {
+        background: linear-gradient(to right, #f8a488, #b497d6, #89d6c5);
+      }
+
+      .navbar-custom .navbar-brand,
+      .navbar-custom .nav-link {
+        color: #ffffff;
+        font-weight: bold;
+      }
+
+      .navbar-custom .nav-link:hover {
+        color: #ffd700;
+      }
+      body {
+        background-color: #f8f9fa;
+      }
+      .casa-section {
+        padding: 80px 0;
+      }
+      .casa-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .casa-text {
+        width: 100%;
+        font-size: 1.2rem;
+        text-align: justify;
+        margin-bottom: 30px;
+      }
+      .casa-image {
+        width: 100%;
+        text-align: center;
+      }
+      .casa-image img {
+        width: 100%;
+        max-width: 800px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        color: #004085;
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+      }
+      .beneficios-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 20px;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <a class="navbar-brand" href="/">INICIO</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('LosQFD') }}">LOS QFD</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('casa') }}">CASA</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/tabla">CREAR DISEÑO</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="casa-section">
+      <div class="container">
+        <h2>LA CASA DE LA CALIDAD</h2>
+        <div class="casa-content">
+          <div class="casa-text">
+            <p>
+              El Quality Function Deployment (QFD), conocido también como la
+              Casa de la Calidad, es una herramienta muy valorada en el ámbito
+              del diseño y la planificación de productos y servicios. Esta
+              metodología permite traducir las necesidades y deseos de los
+              clientes en características concretas que deben ser consideradas
+              durante el proceso de diseño, asegurando así la satisfacción del
+              cliente y la excelencia en la calidad del producto final.
+            </p>
+            <p>
+              La Casa de la Calidad organiza y prioriza las relaciones entre las
+              demandas del cliente y las características técnicas del producto.
+              Esta herramienta permite a los equipos de diseño y desarrollo
+              visualizar de manera clara cómo cada requerimiento del cliente se
+              relaciona con las características del producto, facilitando la
+              toma de decisiones informadas durante el proceso de diseño.
+            </p>
+            <p class="beneficios-title">Beneficios de la Casa de la Calidad:</p>
+            <ul>
+              <li>
+                Proporciona una visión clara y estructurada de los requisitos
+                del cliente.
+              </li>
+              <li>
+                Facilita la comunicación y la comprensión entre los diferentes
+                equipos de trabajo.
+              </li>
+              <li>
+                Ayuda a identificar posibles brechas en el diseño del producto.
+              </li>
+              <li>Permite tomar medidas correctivas de manera anticipada.</li>
+              <li>
+                Facilita la toma de decisiones basadas en datos y evidencias.
+              </li>
+            </ul>
+          </div>
+          <div class="casa-image">
+            <img
+              src="https://jstc-wings.com/wp-content/uploads/2023/10/Metodologia-QFD-Transforma-e-impulsa-la-Calidad-al-Siguiente-Nivel.jpg"
+              alt="Casa de la Calidad"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

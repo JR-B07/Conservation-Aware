@@ -4,8 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tabla Interactiva</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
-      table {
+      /* Barra de navegación personalizada con degradado */
+      .navbar-custom {
+        background: linear-gradient(
+          to right,
+          #f8a488,
+          #b497d6,
+          #89d6c5
+        ); /* Naranja, morado, verde agua */
+      }
+
+      .navbar-custom .navbar-brand,
+      .navbar-custom .nav-link {
+        color: #ffffff;
+        font-weight: bold;
+      }
+
+      .navbar-custom .nav-link:hover {
+        color: #ffd700; /* Amarillo vibrante en hover */
+      }
+      <style > table {
         width: 100%;
         border-collapse: collapse;
       }
@@ -25,9 +48,38 @@
       .sub-header {
         background-color: #58d68d; /* Verde intermedio */
       }
+      body {
+        background-color: #f0f4f8; /* Azul claro */
+      }
     </style>
   </head>
   <body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <a class="navbar-brand" href="{{ url_for('index') }}">INICIO</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('LosQFD') }}">LOS QFD</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('casa') }}">CASA</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/tabla">CREAR DISEÑO</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     <form id="tableForm">
       <table id="interactiveTable">
         <thead>
@@ -35,7 +87,6 @@
             <th rowspan="2" class="header-group">Aspecto</th>
             <th colspan="9" class="header-group">Etapas del Proceso</th>
             <th rowspan="2" class="header-group">Acción</th>
-            <!-- Columna para los botones de eliminar fila -->
           </tr>
           <tr id="columnHeaders">
             <th class="sub-header" contenteditable="true">
@@ -109,47 +160,40 @@
     </form>
 
     <script>
-      // Función para agregar una nueva fila interactiva
+      // Funciones JavaScript para manejar la tabla (agregar/eliminar filas y columnas)
       function addRow() {
         const table = document
           .getElementById("interactiveTable")
           .getElementsByTagName("tbody")[0];
         const newRow = document.createElement("tr");
-
         const columns = table.rows[0].cells.length - 1; // Número de columnas menos la de 'Acción'
         const firstCell = document.createElement("td");
         firstCell.contentEditable = "true";
-        firstCell.textContent = "Nuevo Aspecto"; // Primer celda será el nombre del nuevo aspecto
+        firstCell.textContent = "Nuevo Aspecto";
         newRow.appendChild(firstCell);
-
         for (let i = 1; i < columns; i++) {
-          // Resto de las celdas
           const newCell = document.createElement("td");
           newCell.contentEditable = "true";
           newCell.textContent = "0"; // Valor por defecto
           newRow.appendChild(newCell);
         }
-
         const actionCell = document.createElement("td");
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Eliminar Fila";
         deleteButton.onclick = () => deleteRow(deleteButton);
         actionCell.appendChild(deleteButton);
         newRow.appendChild(actionCell);
-
-        table.appendChild(newRow); // Añadir la nueva fila a la tabla
+        table.appendChild(newRow);
       }
 
-      // Función para agregar una nueva columna interactiva
       function addColumn() {
         const table = document.getElementById("interactiveTable");
         const headerRow = table.querySelector("#columnHeaders");
         const newHeader = document.createElement("th");
         newHeader.contentEditable = "true";
         newHeader.className = "sub-header";
-        newHeader.textContent = "Nueva Columna"; // Nombre por defecto de la nueva columna
+        newHeader.textContent = "Nueva Columna"; // Nombre por defecto
         headerRow.appendChild(newHeader);
-
         const rows = table.getElementsByTagName("tbody")[0].rows;
         for (let i = 0; i < rows.length; i++) {
           const newCell = document.createElement("td");
@@ -159,13 +203,11 @@
         }
       }
 
-      // Función para eliminar una fila
       function deleteRow(button) {
         const row = button.parentNode.parentNode;
         row.parentNode.removeChild(row);
       }
 
-      // Función para eliminar una columna seleccionada
       function deleteColumn() {
         const table = document.getElementById("interactiveTable");
         const headerRow = table.querySelector("#columnHeaders");
@@ -173,10 +215,8 @@
           prompt(
             "Ingresa el número de la columna que deseas eliminar (comenzando desde 1):"
           ) - 1;
-
         if (columnIndex >= 0 && columnIndex < headerRow.cells.length) {
           headerRow.deleteCell(columnIndex);
-
           const rows = table.getElementsByTagName("tbody")[0].rows;
           for (let i = 0; i < rows.length; i++) {
             rows[i].deleteCell(columnIndex);
@@ -186,17 +226,13 @@
         }
       }
 
-      // Función para enviar los datos de la tabla al backend
       function submitTableData() {
         const table = document.querySelector("table");
         const tableData = [];
         const headers = [];
-
-        // Captura de los encabezados
         table.querySelectorAll("thead tr:nth-child(2) th").forEach((header) => {
           headers.push(header.innerText);
         });
-
         table.querySelectorAll("tbody tr").forEach((row) => {
           const rowData = [];
           row.querySelectorAll("td").forEach((cell) => {
@@ -204,7 +240,6 @@
           });
           tableData.push(rowData);
         });
-
         fetch("/update_table", {
           method: "POST",
           headers: {

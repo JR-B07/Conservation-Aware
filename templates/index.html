@@ -9,19 +9,45 @@
       rel="stylesheet"
     />
     <style>
+      /* Barra de navegación personalizada con degradado */
       .navbar-custom {
-        background-color: #ffffff;
+        background: linear-gradient(
+          to right,
+          #f8a488,
+          #b497d6,
+          #89d6c5
+        ); /* Naranja, morado, verde agua */
       }
+
       .navbar-custom .navbar-brand,
       .navbar-custom .nav-link {
-        color: #000000;
+        color: #ffffff;
+        font-weight: bold;
       }
+
       .navbar-custom .nav-link:hover {
-        color: mediumspringgreen;
+        color: #ffd700; /* Amarillo vibrante en hover */
       }
+
+      /* Fondo del sitio */
       body {
-        background-color: #f8f9fa;
+        background-color: #f0f4f8; /* Azul claro */
       }
+
+      /* Sección del título con fondo morado claro */
+      .title-section {
+        background-color: #d1b3ff; /* Morado claro */
+        text-align: center;
+        padding: 50px;
+        color: #000000;
+        font-weight: bold;
+        width: 50%;
+        margin: 30px auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+      }
+
+      /* Sección de héroe */
       .hero-section {
         background-image: url("https://t3.ftcdn.net/jpg/05/39/50/90/360_F_539509042_PAopjCwVkbwKc8jYzPNhVYUQLGFfCrYM.jpg");
         background-size: cover;
@@ -33,25 +59,14 @@
         color: white;
         text-align: center;
       }
-      .title-section {
-        background-color: #d1b3ff; /* Morado más claro */
-        text-align: center;
-        padding: 40px; /* Aumenta el padding para el tamaño del rectángulo */
-        color: #000000;
-        font-weight: bold;
-        width: 50%; /* Ajusta el ancho del rectángulo */
-        margin: 0 auto; /* Centra el rectángulo */
-        border-radius: 10px; /* Bordes redondeados */
-      }
     </style>
   </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-      <a class="navbar-brand" href="{{ url_for('index') }}"
-        >LA CASA DE LA CALIDAD</a
-      >
 
-      <!--BARRA DE NAVEGACION-->
+  <body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <a class="navbar-brand" href="{{ url_for('index') }}">INICIO</a>
+
       <button
         class="navbar-toggler"
         type="button"
@@ -63,24 +78,29 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('LosQFD') }}">Acerca de</a>
+            <a class="nav-link" href="{{ url_for('LosQFD') }}">LOS QFD</a>
+          </li>
+           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('casa') }}">CASA</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/tabla">Tabla</a>
-            <!-- Enlace para la tabla de médicos -->
+            <a class="nav-link" href="/tabla">CREAR DISEÑO</a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <!-- Nueva sección para el título con barra morada clara -->
+    <!-- Nueva sección para el título -->
     <div class="title-section">
       <h1>¡BIENVENIDO A LA CASA DE LA CALIDAD!</h1>
     </div>
 
+    <!-- Hero Section -->
     <div class="hero-section">
       <div>
         <h1></h1>

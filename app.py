@@ -74,6 +74,11 @@ def LosQFD():
     return render_template('LosQFD.html')
 
 
+@app.route('/casa')
+def casa():
+    return render_template('casa.html')
+
+
 @app.route('/update_table', methods=['POST'])
 def update_table():
     headers = request.json.get('headers')  # Nombres de las columnas

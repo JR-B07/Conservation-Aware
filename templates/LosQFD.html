@@ -3,48 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sobre Nosotros - Conservation Aware</title>
+    <title>CASA DE LA CALIDAD - QFD</title>
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <style>
+      /* Paleta de colores personalizada */
+      body {
+        background-color: #f0f4f8; /* Fondo claro */
+      }
+
       .navbar-custom {
-        background-color: #ffffff;
+        background: linear-gradient(
+          to right,
+          #f8a488,
+          #b497d6,
+          #89d6c5
+        ); /* Gradiente */
       }
 
       .navbar-custom .navbar-brand,
       .navbar-custom .nav-link {
-        color: #000000;
+        color: white;
+        font-weight: bold;
       }
 
       .navbar-custom .nav-link:hover {
-        color: mediumspringgreen;
+        color: #ffd700;
       }
 
-      body {
-        background-color: #f8f9fa;
-      }
-
+      /* Contenedor principal */
       .about-section {
-        padding: 60px 0;
-        text-align: center;
+        padding: 80px 0;
       }
 
       .about-content {
         display: flex;
-        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 30px;
+        justify-content: center;
         align-items: center;
       }
 
       .about-text {
-        flex: 1;
-        padding: 20px;
+        flex: 1 1 45%;
+        padding: 25px;
         text-align: justify;
+        font-size: 1.2rem;
       }
 
       .about-image {
-        flex: 1;
+        flex: 1 1 40%;
         text-align: center;
       }
 
@@ -52,13 +62,63 @@
         max-width: 100%;
         height: auto;
         border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #004085;
+      }
+
+      /* Estilo de las tarjetas QFD */
+      .qfd-card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .qfd-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .qfd-icon {
+        font-size: 50px;
+        margin-bottom: 10px;
+      }
+
+      .qfd-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      /* Colores específicos para cada tarjeta */
+      .qfd-quality {
+        background-color: #f8a488;
+        color: white;
+      }
+
+      .qfd-function {
+        background-color: #b497d6;
+        color: white;
+      }
+
+      .qfd-deployment {
+        background-color: #89d6c5;
+        color: white;
       }
     </style>
   </head>
 
   <body>
+    <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-custom">
-      <a class="navbar-brand" href="/">LA CASA DE LA CALIDAD</a>
+      <a class="navbar-brand" href="/">INICIO</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -72,41 +132,80 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/tabla">Tabla</a>
+            <a class="nav-link" href="{{ url_for('casa') }}">CASA</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/tabla">CREAR DISEÑO</a>
           </li>
         </ul>
       </div>
     </nav>
 
+    <!-- Sección de introducción -->
     <section class="about-section">
       <div class="container">
-        <h2 class="text-center mb-4">LA CASA DE LA CALIDAD</h2>
+        <h2 class="text-center mb-5">LOS QFD</h2>
         <div class="about-content">
           <div class="about-text">
             <p>
-              El QFD (Despliegue de la Función de Calidad), por sus siglas en inglés Quality Function Deployment, 
-              es una metodología para transformar las necesidades y expectativas de los clientes en características 
-              específicas del producto o servicio.
+              El <strong>QFD (Despliegue de la Función de Calidad)</strong>, por
+              sus siglas en inglés <strong>Quality Function Deployment</strong>,
+              es una metodología para transformar las necesidades y expectativas
+              de los clientes en características específicas del producto o
+              servicio.
+            </p>
+            <p>
+              <strong>Objetivo del QFD:</strong> Asegurar que la voz del cliente
+              se traduzca en cada fase del desarrollo, desde el diseño hasta la
+              producción y entrega. También busca mejorar la satisfacción del
+              cliente al crear productos más alineados con sus deseos y
+              necesidades.
             </p>
           </div>
           <div class="about-image">
             <img
               src="https://www.shutterstock.com/shutterstock/photos/2005532984/display_1500/stock-vector-qfd-quality-function-deployment-acronym-business-concept-background-vector-illustration-2005532984.jpg"
-              alt="Animal en peligro de extinción"
+              alt="QFD - Quality Function Deployment"
             />
-          </div>
-          <div class="about-text">
-            <p>
-              Objetivo del QFD:
-                -Asegurar que la voz del cliente se traduzca en cada fase del desarrollo, desde el diseño hasta la producción y entrega.
-                -Mejorar la satisfacción del cliente al crear productos más alineados con sus deseos y necesidades.
-            </p>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Sección de tarjetas QFD -->
+    <div class="container qfd-container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="qfd-card qfd-quality">
+            <div class="qfd-icon">📢</div>
+            <div class="qfd-title">Voz del Cliente</div>
+            <p>Recopilamos las necesidades y expectativas de los clientes.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="qfd-card qfd-function">
+            <div class="qfd-icon">🔧</div>
+            <div class="qfd-title">Características Técnicas</div>
+            <p>
+              Transformamos los requisitos en especificaciones técnicas claras.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="qfd-card qfd-deployment">
+            <div class="qfd-icon">🚀</div>
+            <div class="qfd-title">Despliegue</div>
+            <p>
+              Aseguramos una implementación eficaz en cada fase del proceso.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
