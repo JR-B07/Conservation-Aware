@@ -34,8 +34,10 @@
           <tr>
             <th rowspan="2" class="header-group">Aspecto</th>
             <th colspan="9" class="header-group">Etapas del Proceso</th>
+            <th rowspan="2" class="header-group">Acción</th>
+            <!-- Columna para los botones de eliminar fila -->
           </tr>
-          <tr>
+          <tr id="columnHeaders">
             <th class="sub-header" contenteditable="true">
               Recepción del maíz
             </th>
@@ -75,6 +77,11 @@
             <td contenteditable="true">3</td>
             <td contenteditable="true">1</td>
             <td contenteditable="true">5</td>
+            <td>
+              <button type="button" onclick="deleteRow(this)">
+                Eliminar Fila
+              </button>
+            </td>
           </tr>
           <tr>
             <td contenteditable="true">Sabor</td>
@@ -87,12 +94,17 @@
             <td contenteditable="true">3</td>
             <td contenteditable="true">3</td>
             <td contenteditable="true">5</td>
+            <td>
+              <button type="button" onclick="deleteRow(this)">
+                Eliminar Fila
+              </button>
+            </td>
           </tr>
-          <!-- Agregar más filas aquí -->
         </tbody>
       </table>
       <button type="button" onclick="addRow()">Agregar Fila</button>
       <button type="button" onclick="addColumn()">Agregar Columna</button>
+      <button type="button" onclick="deleteColumn()">Eliminar Columna</button>
       <button type="button" onclick="submitTableData()">Guardar Cambios</button>
     </form>
 
@@ -104,7 +116,7 @@
           .getElementsByTagName("tbody")[0];
         const newRow = document.createElement("tr");
 
-        const columns = table.rows[0].cells.length; // Número de columnas
+        const columns = table.rows[0].cells.length - 1; // Número de columnas menos la de 'Acción'
         const firstCell = document.createElement("td");
         firstCell.contentEditable = "true";
         firstCell.textContent = "Nuevo Aspecto"; // Primer celda será el nombre del nuevo aspecto
@@ -118,13 +130,20 @@
           newRow.appendChild(newCell);
         }
 
+        const actionCell = document.createElement("td");
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Eliminar Fila";
+        deleteButton.onclick = () => deleteRow(deleteButton);
+        actionCell.appendChild(deleteButton);
+        newRow.appendChild(actionCell);
+
         table.appendChild(newRow); // Añadir la nueva fila a la tabla
       }
 
       // Función para agregar una nueva columna interactiva
       function addColumn() {
         const table = document.getElementById("interactiveTable");
-        const headerRow = table.getElementsByTagName("thead")[0].rows[1]; // Segunda fila de la cabecera
+        const headerRow = table.querySelector("#columnHeaders");
         const newHeader = document.createElement("th");
         newHeader.contentEditable = "true";
         newHeader.className = "sub-header";
@@ -136,7 +155,34 @@
           const newCell = document.createElement("td");
           newCell.contentEditable = "true";
           newCell.textContent = "0"; // Valor por defecto
-          rows[i].appendChild(newCell);
+          rows[i].insertBefore(newCell, rows[i].lastElementChild); // Insertar antes de la última columna ('Acción')
+        }
+      }
+
+      // Función para eliminar una fila
+      function deleteRow(button) {
+        const row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+      }
+
+      // Función para eliminar una columna seleccionada
+      function deleteColumn() {
+        const table = document.getElementById("interactiveTable");
+        const headerRow = table.querySelector("#columnHeaders");
+        const columnIndex =
+          prompt(
+            "Ingresa el número de la columna que deseas eliminar (comenzando desde 1):"
+          ) - 1;
+
+        if (columnIndex >= 0 && columnIndex < headerRow.cells.length) {
+          headerRow.deleteCell(columnIndex);
+
+          const rows = table.getElementsByTagName("tbody")[0].rows;
+          for (let i = 0; i < rows.length; i++) {
+            rows[i].deleteCell(columnIndex);
+          }
+        } else {
+          alert("Número de columna no válido.");
         }
       }
 
