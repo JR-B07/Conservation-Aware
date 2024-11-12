@@ -1,0 +1,159 @@
+{% extends "base.html" %} {% block title %}Tabla QFD{% endblock %} {% block hero
+%}{% endblock %} {% block content %}
+<div class="container-fluid p-0">
+  <!-- Triángulo equilátero encima de la tabla -->
+  <div class="triangle-container">
+    <div class="triangle-top"></div>
+  </div>
+
+  <!-- Main content -->
+  <div class="container mt-4">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="{{ etapas|length + 2 }}" class="text-center bg-light">
+            Etapas del Proceso
+          </th>
+        </tr>
+        <tr class="bg-mint">
+          <th class="align-middle">Aspecto</th>
+          {% for etapa in etapas %}
+          <th class="text-center">{{ etapa }}</th>
+          {% endfor %}
+          <th class="text-center">Resultado Interno</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for aspecto in aspectos %}
+        <tr>
+          <td class="bg-light">{{ aspecto }}</td>
+          {% for etapa in etapas %}
+          <td
+            contenteditable="true"
+            class="text-center valor-celda bg-mint-light"
+            data-aspecto="{{ aspecto }}"
+            data-etapa="{{ etapa }}"
+          >
+            0
+          </td>
+          {% endfor %}
+          <td
+            contenteditable="true"
+            class="text-center valor-celda bg-mint-light"
+          >
+            0
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- Action buttons -->
+    <div class="mt-3">
+      <button class="btn btn-success" onclick="guardarCambios()">
+        Guardar Cambios
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Triángulo encima de la tabla */
+  .triangle-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -20px; /* Ajuste para solaparlo con la tabla */
+  }
+
+  .triangle-top {
+    width: 0;
+    height: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-bottom: 100px solid #98ffb3; /* Color de fondo del triángulo */
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .table th,
+  .table td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+  }
+
+  .bg-mint {
+    background-color: #98ffb3;
+  }
+
+  .bg-mint-light {
+    background-color: #e6ffe6;
+  }
+
+  .valor-celda {
+    text-align: center;
+    min-width: 50px;
+  }
+
+  .table thead th {
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .table th,
+  .table td {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  .table td:first-child {
+    font-weight: normal;
+    text-align: left;
+  }
+</style>
+
+<script>
+  function guardarCambios() {
+    const valores = [];
+    const tabla = document.querySelector("table");
+    const filas = tabla.querySelectorAll("tbody tr");
+    const headers = Array.from(tabla.querySelectorAll("thead tr:last-child th"))
+      .slice(1, -1)
+      .map((th) => th.textContent);
+
+    filas.forEach((fila) => {
+      const aspecto = fila.cells[0].textContent;
+      const fila_datos = { Aspecto: aspecto };
+
+      headers.forEach((header, index) => {
+        fila_datos[header] = parseFloat(fila.cells[index + 1].textContent) || 0;
+      });
+
+      fila_datos["Resultado Interno"] =
+        parseFloat(fila.cells[fila.cells.length - 1].textContent) || 0;
+      valores.push(fila_datos);
+    });
+
+    fetch("/guardar_tabla", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ valores: valores }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          alert("Tabla guardada exitosamente");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Error al guardar la tabla");
+      });
+  }
+</script>
+{% endblock %}
