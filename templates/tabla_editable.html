@@ -1,77 +1,62 @@
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 {% extends "base.html" %} {% block title %}Tabla QFD{% endblock %} {% block hero
 %}{% endblock %} {% block content %}
-<div class="container-fluid p-0">
-  <!-- Triángulo equilátero encima de la tabla -->
-  <div class="triangle-container">
-    <div class="triangle-top"></div>
-  </div>
-
-  <!-- Main content -->
-  <div class="container mt-4">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th colspan="{{ etapas|length + 2 }}" class="text-center bg-light">
-            Etapas del Proceso
-          </th>
-        </tr>
-        <tr class="bg-mint">
-          <th class="align-middle">Aspecto</th>
-          {% for etapa in etapas %}
-          <th class="text-center">{{ etapa }}</th>
-          {% endfor %}
-          <th class="text-center">Resultado Interno</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for aspecto in aspectos %}
-        <tr>
-          <td class="bg-light">{{ aspecto }}</td>
-          {% for etapa in etapas %}
-          <td
-            contenteditable="true"
-            class="text-center valor-celda bg-mint-light"
-            data-aspecto="{{ aspecto }}"
-            data-etapa="{{ etapa }}"
-          >
-            0
-          </td>
-          {% endfor %}
-          <td
-            contenteditable="true"
-            class="text-center valor-celda bg-mint-light"
-          >
-            0
-          </td>
-        </tr>
+<!-- Main content -->
+<div class="container mt-4">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th colspan="{{ etapas|length + 2 }}" class="text-center bg-light">
+          ETAPAS DEL PROCESO
+        </th>
+      </tr>
+      <tr class="bg-mint">
+        <th class="align-middle">ASPECTO</th>
+        {% for etapa in etapas %}
+        <th class="text-center">{{ etapa }}</th>
         {% endfor %}
-      </tbody>
-    </table>
+        <th class="text-center">RESULTADO INTERNO</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for aspecto in aspectos %}
+      <tr>
+        <td class="bg-light">{{ aspecto }}</td>
+        {% for etapa in etapas %}
+        <td
+          contenteditable="true"
+          class="text-center valor-celda bg-mint-light"
+          data-aspecto="{{ aspecto }}"
+          data-etapa="{{ etapa }}"
+        >
+          0
+        </td>
+        {% endfor %}
+        <td
+          contenteditable="true"
+          class="text-center valor-celda bg-mint-light"
+        >
+          0
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-    <!-- Action buttons -->
-    <div class="mt-3">
-      <button class="btn btn-success" onclick="guardarCambios()">
-        Guardar Cambios
-      </button>
-    </div>
+  <!-- Action buttons -->
+  <div class="mt-3">
+    <button class="btn btn-success" onclick="guardarYDescargar()">
+      GUARDAR Y DESCARGAR
+    </button>
   </div>
 </div>
 
 <style>
-  /* Triángulo encima de la tabla */
-  .triangle-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: -20px; /* Ajuste para solaparlo con la tabla */
-  }
-
-  .triangle-top {
-    width: 0;
-    height: 0;
-    border-left: 200px solid transparent;
-    border-right: 200px solid transparent;
-    border-bottom: 100px solid #98ffb3; /* Color de fondo del triángulo */
+  body {
+    background-image: url("/static/images/50886015-9d31-4560-864d-f6b994e30065.jpeg"); /* Update the path accordingly */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent background from repeating */
   }
 
   .table {
@@ -116,7 +101,7 @@
 </style>
 
 <script>
-  function guardarCambios() {
+  function guardarYDescargar() {
     const valores = [];
     const tabla = document.querySelector("table");
     const filas = tabla.querySelectorAll("tbody tr");
@@ -147,7 +132,10 @@
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success") {
-          alert("Tabla guardada exitosamente");
+          // Redirigir a la ruta de descarga
+          window.location.href = "/descargar_excel";
+        } else {
+          alert("Error al guardar los cambios");
         }
       })
       .catch((error) => {

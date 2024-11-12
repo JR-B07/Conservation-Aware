@@ -72,6 +72,24 @@ def agregar_etapa_route():
     return redirect(url_for('tabla'))
 
 
+@app.route('/eliminar_aspecto', methods=['POST'])
+def eliminar_aspecto():
+    aspecto_a_eliminar = request.form.get('aspecto')
+    if aspecto_a_eliminar and 'aspectos' in session:
+        session['aspectos'] = [aspecto for aspecto in session['aspectos']
+                               if aspecto != aspecto_a_eliminar]
+    return redirect(url_for('tabla'))
+
+
+@app.route('/eliminar_etapa', methods=['POST'])
+def eliminar_etapa():
+    etapa_a_eliminar = request.form.get('etapa')
+    if etapa_a_eliminar and 'etapas' in session:
+        session['etapas'] = [etapa for etapa in session['etapas']
+                             if etapa != etapa_a_eliminar]
+    return redirect(url_for('tabla'))
+
+
 @app.route('/generar_tabla', methods=['POST'])
 def generar_tabla():
     # Obtener aspectos y etapas de la sesión
