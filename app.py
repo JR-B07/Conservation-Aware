@@ -11,11 +11,11 @@ data_dir = Path('data')
 data_dir.mkdir(exist_ok=True)
 
 
-def initialize_dataframe(aspectos, etapas):
-    """Inicializa el DataFrame con aspectos y etapas dinámicos"""
-    df = pd.DataFrame(columns=['Aspecto'] + etapas + ['Resultado Interno'])
-    for aspecto in aspectos:
-        df.loc[len(df)] = [aspecto] + [0] * (len(etapas) + 1)
+def initialize_dataframe(Que, etapas):
+    """Inicializa el DataFrame con Que y etapas dinámicos"""
+    df = pd.DataFrame(columns=['Que'] + etapas + ['Resultado Interno'])
+    for Que in Que:
+        df.loc[len(df)] = [Que] + [0] * (len(etapas) + 1)
     return df
 
 
@@ -37,25 +37,25 @@ def casa():
 @app.route('/Tabla1')
 def tabla():
     # Inicializar listas vacías si no existen en la sesión
-    if 'aspectos' not in session:
-        session['aspectos'] = []
+    if 'Que' not in session:
+        session['Que'] = []
     if 'etapas' not in session:
         session['etapas'] = []
     return render_template('Tabla1.html',
-                           aspectos=session['aspectos'],
+                           Que=session['Que'],
                            etapas=session['etapas'])
 
 
-@app.route('/agregar_aspecto', methods=['POST'])
-def agregar_aspecto_route():
-    nuevo_aspecto = request.form.get('aspecto')
-    if nuevo_aspecto:
-        if 'aspectos' not in session:
-            session['aspectos'] = []
-        aspectos = session['aspectos']
-        if nuevo_aspecto not in aspectos:
-            aspectos.append(nuevo_aspecto)
-            session['aspectos'] = aspectos
+@app.route('/agregar_Que', methods=['POST'])
+def agregar_Que_route():
+    nuevo_Que = request.form.get('Que')
+    if nuevo_Que:
+        if 'Que' not in session:
+            session['Que'] = []
+        Que = session['Que']
+        if nuevo_Que not in Que:
+            Que.append(nuevo_Que)
+            session['Que'] = Que
     return redirect(url_for('tabla'))
 
 
@@ -72,12 +72,12 @@ def agregar_etapa_route():
     return redirect(url_for('tabla'))
 
 
-@app.route('/eliminar_aspecto', methods=['POST'])
-def eliminar_aspecto():
-    aspecto_a_eliminar = request.form.get('aspecto')
-    if aspecto_a_eliminar and 'aspectos' in session:
-        session['aspectos'] = [aspecto for aspecto in session['aspectos']
-                               if aspecto != aspecto_a_eliminar]
+@app.route('/eliminar_Que', methods=['POST'])
+def eliminar_Que():
+    Que_a_eliminar = request.form.get('Que')
+    if Que_a_eliminar and 'Que' in session:
+        session['Que'] = [Que for Que in session['Ques']
+                          if Que != Que_a_eliminar]
     return redirect(url_for('tabla'))
 
 
@@ -92,22 +92,22 @@ def eliminar_etapa():
 
 @app.route('/generar_tabla', methods=['POST'])
 def generar_tabla():
-    # Obtener aspectos y etapas de la sesión
-    aspectos = session.get('aspectos', [])
+    # Obtener Ques y etapas de la sesión
+    Que = session.get('Que', [])
     etapas = session.get('etapas', [])
 
-    # Verificar si hay aspectos y etapas
-    if not aspectos or not etapas:
+    # Verificar si hay Ques y etapas
+    if not Ques or not etapas:
         return redirect(url_for('tabla'))
 
-    # Crear nuevo DataFrame con los aspectos y etapas actuales
-    df = initialize_dataframe(aspectos, etapas)
+    # Crear nuevo DataFrame con los Ques y etapas actuales
+    df = initialize_dataframe(Que, etapas)
     df.to_excel(data_dir / 'matriz_qfd.xlsx', index=False)
 
     valores = df.to_dict('records')
 
     return render_template('tabla_editable.html',
-                           aspectos=aspectos,
+                           Que=Que,
                            etapas=etapas,
                            valores=valores)
 
@@ -120,7 +120,7 @@ def guardar_tabla():
 
         # Obtener las columnas actuales de la sesión
         etapas = session.get('etapas', [])
-        required_columns = ['Aspecto'] + etapas + ['Resultado Interno']
+        required_columns = ['Que'] + etapas + ['Resultado Interno']
 
         # Asegurarse de que todas las columnas necesarias estén presentes
         for col in required_columns:

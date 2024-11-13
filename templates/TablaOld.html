@@ -91,7 +91,7 @@
       <table id="interactiveTable">
         <thead>
           <tr>
-            <th rowspan="2" class="header-group">Aspecto</th>
+            <th rowspan="2" class="header-group">Que</th>
             <th colspan="9" class="header-group">Etapas del Proceso</th>
             <th rowspan="2" class="header-group">Acción</th>
           </tr>
@@ -176,7 +176,7 @@
         const columns = table.rows[0].cells.length - 1; // Número de columnas menos la de 'Acción'
         const firstCell = document.createElement("td");
         firstCell.contentEditable = "true";
-        firstCell.textContent = "Nuevo Aspecto";
+        firstCell.textContent = "Nuevo Que";
         newRow.appendChild(firstCell);
         for (let i = 1; i < columns; i++) {
           const newCell = document.createElement("td");
