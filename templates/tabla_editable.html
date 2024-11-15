@@ -6,38 +6,35 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th colspan="{{ etapas|length + 2 }}" class="text-center bg-light">
-          ETAPAS DEL PROCESO
+        <th colspan="{{ Comos|length + 2 }}" class="text-center bg-light">
+          COMOS DEL PROCESO
         </th>
       </tr>
       <tr class="bg-mint">
-        <th class="align-middle">ASPECTO</th>
-        {% for etapa in etapas %}
-        <th class="text-center">{{ etapa }}</th>
+        <th class="align-middle">COMOS</th>
+        {% for Como in Comos %}
+        <th class="text-center">{{ Comos }}</th>
         {% endfor %}
         <th class="text-center">RESULTADO INTERNO</th>
       </tr>
     </thead>
+
     <tbody>
-      {% for aspecto in aspectos %}
+      {% for Que in Ques %}
       <tr>
-        <td class="bg-light">{{ aspecto }}</td>
-        {% for etapa in etapas %}
+        <td class="bg-light">{{ Ques}}</td>
+        {% for Como in Comos %}
         <td
           contenteditable="true"
           class="text-center valor-celda bg-mint-light"
-          data-aspecto="{{ aspecto }}"
-          data-etapa="{{ etapa }}"
-        >
-          0
-        </td>
+          data-Que="{{ Que }}"
+          data-Como="{{ Como }}"
+        ></td>
         {% endfor %}
         <td
           contenteditable="true"
           class="text-center valor-celda bg-mint-light"
-        >
-          0
-        </td>
+        ></td>
       </tr>
       {% endfor %}
     </tbody>
@@ -110,8 +107,8 @@
       .map((th) => th.textContent);
 
     filas.forEach((fila) => {
-      const aspecto = fila.cells[0].textContent;
-      const fila_datos = { Aspecto: aspecto };
+      const Que = fila.cells[0].textContent;
+      const fila_datos = { Ques: Que };
 
       headers.forEach((header, index) => {
         fila_datos[header] = parseFloat(fila.cells[index + 1].textContent) || 0;

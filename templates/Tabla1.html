@@ -1,67 +1,69 @@
-{% extends "base.html" %} {% block title %}Crear Tabla{% endblock %} {% block
-hero %}{% endblock %} {% block content %}
+{% extends "base.html" %}
+{% block title %}Crear Tabla{% endblock %}
+{% block hero %}{% endblock %}
+{% block content %}
 <div class="container mt-4">
-  <h2  class="text-center mb-5">CREAR NUEVA TABLA</h2>
+  <h2 class="text-center mb-5">CREAR NUEVA TABLA</h2>
 
-  <!-- Formulario para agregar aspectos -->
+  <!-- Formulario para agregar Ques -->
   <br></br>
   
   <div class="mb-4">
-    <h3>Agregar Aspecto</h3>
+    <h3>Agregar Que</h3>
     <form
-      action="{{ url_for('agregar_aspecto_route') }}"
+      action="{{ url_for('agregar_Que') }}"
       method="POST"
       class="form-inline"
     >
-      <input type="text" name="aspecto" class="form-control mr-2" required />
-      <button type="submit" class="btn btn-primary">Agregar Aspecto</button>
+      <input type="text" name="Que" class="form-control mr-2" required />
+      <button type="submit" class="btn btn-primary">Agregar Que</button>
     </form>
   </div>
 
-  <!-- Formulario para agregar etapas -->
+  <!-- Formulario para agregar Comos -->
   <div class="mb-4">
-    <h3>Agregar Etapa</h3>
+    <h3>Agregar Como</h3>
     <form
-      action="{{ url_for('agregar_etapa_route') }}"
+      action="{{ url_for('agregar_Como') }}"
       method="POST"
       class="form-inline"
     >
-      <input type="text" name="etapa" class="form-control mr-2" required />
-      <button type="submit" class="btn btn-primary">Agregar Etapa</button>
+      <input type="text" name="Como" class="form-control mr-2" required />
+      <button type="submit" class="btn btn-primary">Agregar Como</button>
     </form>
   </div>
 
-  <!-- Lista de aspectos y etapas -->
+  <!-- Lista de Ques y Comos -->
   <div class="mt-3">
-  <h5>Aspectos</h5>
-  <ul>
-    {% for aspecto in aspectos %}
-    <li>
-      {{ aspecto }}
-      <form action="{{ url_for('eliminar_aspecto') }}" method="post" style="display:inline;">
-        <input type="hidden" name="aspecto" value="{{ aspecto }}">
-        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-      </form>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+    <h5>Ques</h5>
+    <ul>
+      {% for Que in Que %}
+      <li>
+        {{ Que }}
+        <form action="{{ url_for('eliminar_Que') }}" method="POST" style="display: inline;">
+          <input type="hidden" name="Que" value="{{ Que }}" />
+          <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
-<!-- Mostrar y eliminar etapas -->
-<div class="mt-3">
-  <h5>Etapas</h5>
-  <ul>
-    {% for etapa in etapas %}
-    <li>
-      {{ etapa }}
-      <form action="{{ url_for('eliminar_etapa') }}" method="post" style="display:inline;">
-        <input type="hidden" name="etapa" value="{{ etapa }}">
-        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-      </form>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+  <!-- Mostrar y eliminar Comos -->
+  <div class="mt-3">
+    <h5>Comos</h5>
+    <ul>
+      {% for Como in Comos %}
+      <li>
+        {{ Como }}
+        <form action="{{ url_for('eliminar_Como') }}" method="POST" style="display: inline;">
+          <input type="hidden" name="Como" value="{{ Como }}" />
+          <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
   <!-- Botón para generar tabla -->
   <form action="{{ url_for('generar_tabla')}}" method="POST">
