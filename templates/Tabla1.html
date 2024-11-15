@@ -1,13 +1,11 @@
-{% extends "base.html" %}
-{% block title %}Crear Tabla{% endblock %}
-{% block hero %}{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Crear Tabla{% endblock %} {% block
+hero %}{% endblock %} {% block content %}
 <div class="container mt-4">
-  <h2 class="text-center mb-5">CREAR NUEVA TABLA</h2>
+  <h2  class="text-center mb-5">CREAR NUEVA TABLA</h2>
 
   <!-- Formulario para agregar Ques -->
   <br></br>
-  
+
   <div class="mb-4">
     <h3>Agregar Que</h3>
     <form
@@ -35,35 +33,34 @@
 
   <!-- Lista de Ques y Comos -->
   <div class="mt-3">
-    <h5>Ques</h5>
-    <ul>
-      {% for Que in Que %}
-      <li>
-        {{ Que }}
-        <form action="{{ url_for('eliminar_Que') }}" method="POST" style="display: inline;">
-          <input type="hidden" name="Que" value="{{ Que }}" />
-          <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-        </form>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <!-- Mostrar y eliminar Comos -->
-  <div class="mt-3">
-    <h5>Comos</h5>
-    <ul>
-      {% for Como in Comos %}
-      <li>
-        {{ Como }}
-        <form action="{{ url_for('eliminar_Como') }}" method="POST" style="display: inline;">
-          <input type="hidden" name="Como" value="{{ Como }}" />
-          <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-        </form>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+  <h5>Ques</h5>
+  <ul>
+    {% for Que in Ques %}
+    <li>
+      {{ Que }}
+      <form action="{{ url_for('eliminar_Que') }}"  method="post" style="display:inline;">
+        <input type="hidden" name="Que" value="{{ Que }}">
+        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+<!-- Mostrar y eliminar Comos -->
+<div class="mt-3">
+  <h5>Comos</h5>
+  <ul>
+    {% for Como in Comos %}
+    <li>
+      {{ Como }}
+       <form action="{{ url_for('eliminar_Como') }}"  method="post" style="display:inline;">
+        <input type="hidden" name="Como" value="{{ Como }}">
+        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 
   <!-- Botón para generar tabla -->
   <form action="{{ url_for('generar_tabla')}}" method="POST">
