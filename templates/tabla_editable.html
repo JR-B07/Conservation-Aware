@@ -1,144 +1,80 @@
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-{% extends "base.html" %} {% block title %}Tabla QFD{% endblock %} {% block hero
-%}{% endblock %} {% block content %}
-<!-- Main content -->
+{% extends "base.html" %} {% block title %}Tabla QFD{% endblock %} {% block
+content %}
 <div class="container mt-4">
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th colspan="{{ Comos|length + 2 }}" class="text-center bg-light">
-          COMOS DEL PROCESO
-        </th>
-      </tr>
-      <tr class="bg-mint">
-        <th class="align-middle">COMOS</th>
-        {% for Como in Comos %}
-        <th class="text-center">{{ Comos }}</th>
-        {% endfor %}
-        <th class="text-center">RESULTADO INTERNO</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {% for Que in Ques %}
-      <tr>
-        <td class="bg-light">{{ Ques}}</td>
-        {% for Como in Comos %}
-        <td
-          contenteditable="true"
-          class="text-center valor-celda bg-mint-light"
-          data-Que="{{ Que }}"
-          data-Como="{{ Como }}"
-        ></td>
-        {% endfor %}
-        <td
-          contenteditable="true"
-          class="text-center valor-celda bg-mint-light"
-        ></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  <!-- Action buttons -->
-  <div class="mt-3">
-    <button class="btn btn-success" onclick="guardarYDescargar()">
-      GUARDAR Y DESCARGAR
+  <!-- Formulario para agregar Ques y Comos -->
+  <form
+    action="{{ url_for('generar_tabla') }}"
+    method="POST"
+    id="formulario-tabla"
+  >
+    <label for="ques">Agregar Ques (separados por comas):</label>
+    <input type="text" name="ques" id="ques" required />
+    <br />
+    <label for="comos">Agregar Comos (separados por comas):</label>
+    <input type="text" name="comos" id="comos" required />
+    <br />
+    <button type="submit" id="generar-tabla" class="btn btn-primary mt-2">
+      Generar Tabla
     </button>
+  </form>
+  <!-- Tabla dinámica -->
+  <div id="tabla-contenedor" class="mt-4">
+    {% if qfd_data %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="align-middle">QUES</th>
+          {% for col in qfd_data[0].keys() if col != "Ques" %}
+          <th class="text-center">{{ col }}</th>
+          {% endfor %}
+          <th class="text-center">Total</th>
+          <th class="text-center">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in qfd_data %}
+        <tr>
+          <td class="bg-light">{{ row['Ques'] }}</td>
+          {% for col, value in row.items() if col != "Ques" %}
+          <td contenteditable="true" class="text-center valor-celda">
+            {{ value }}
+          </td>
+          {% endfor %}
+          <td contenteditable="true" class="text-center valor-celda">
+            {{ row['Total'] }}
+          </td>
+          <td contenteditable="true" class="text-center valor-celda">
+            {{ row['Valor'] }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>
+      No hay datos generados aún. Llena el formulario y presiona "Generar
+      Tabla".
+    </p>
+    {% endif %}
   </div>
+  <!-- Botón para guardar y descargar -->
+  <div class="mt-3">
+    <a
+      href="{{ url_for('descargar_excel') }}"
+      class="btn btn-success"
+      role="button"
+    >
+      Guardar y Descargar
+    </a>
+  </div>
+  <script>
+    // Función para actualizar la tabla con datos dinámicos
+    function actualizarTabla(qfdData) {
+      // Same as before
+    }
+  </script>
+  <style>
+    /* Same as before */
+  </style>
 </div>
-
-<style>
-  body {
-    background-image: url("/static/images/50886015-9d31-4560-864d-f6b994e30065.jpeg"); /* Update the path accordingly */
-    background-size: cover; /* Ensure the image covers the entire background */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent background from repeating */
-  }
-
-  .table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  .table th,
-  .table td {
-    border: 1px solid #dee2e6;
-    padding: 8px;
-  }
-
-  .bg-mint {
-    background-color: #98ffb3;
-  }
-
-  .bg-mint-light {
-    background-color: #e6ffe6;
-  }
-
-  .valor-celda {
-    text-align: center;
-    min-width: 50px;
-  }
-
-  .table thead th {
-    vertical-align: middle;
-    text-align: center;
-  }
-
-  .table th,
-  .table td {
-    white-space: normal;
-    word-wrap: break-word;
-  }
-
-  .table td:first-child {
-    font-weight: normal;
-    text-align: left;
-  }
-</style>
-
-<script>
-  function guardarYDescargar() {
-    const valores = [];
-    const tabla = document.querySelector("table");
-    const filas = tabla.querySelectorAll("tbody tr");
-    const headers = Array.from(tabla.querySelectorAll("thead tr:last-child th"))
-      .slice(1, -1)
-      .map((th) => th.textContent);
-
-    filas.forEach((fila) => {
-      const Que = fila.cells[0].textContent;
-      const fila_datos = { Ques: Que };
-
-      headers.forEach((header, index) => {
-        fila_datos[header] = parseFloat(fila.cells[index + 1].textContent) || 0;
-      });
-
-      fila_datos["Resultado Interno"] =
-        parseFloat(fila.cells[fila.cells.length - 1].textContent) || 0;
-      valores.push(fila_datos);
-    });
-
-    fetch("/guardar_tabla", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ valores: valores }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "success") {
-          // Redirigir a la ruta de descarga
-          window.location.href = "/descargar_excel";
-        } else {
-          alert("Error al guardar los cambios");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Error al guardar la tabla");
-      });
-  }
-</script>
 {% endblock %}

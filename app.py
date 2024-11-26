@@ -4,7 +4,6 @@ from pathlib import Path
 import secrets
 
 app = Flask(__name__)
-
 app.secret_key = secrets.token_hex(16)
 
 # Asegurarse de que el directorio 'data' existe
@@ -14,9 +13,11 @@ data_dir.mkdir(exist_ok=True)
 
 def initialize_dataframe(Ques, Comos):
     """Inicializa el DataFrame con Ques y Comos dinámicos"""
-    df = pd.DataFrame(columns=['Ques'] + Comos + ['Resultado Interno'])
+    df = pd.DataFrame(columns=['Ques'] + Comos + ['Total', 'Valor'])
     for Que in Ques:
-        df.loc[len(df)] = [Que] + [0] * (len(Comos) + 1)
+        # Inicializar cada fila con 0 y calcular Total y Valor
+        row = [Que] + [0] * len(Comos) + [0, 0]
+        df.loc[len(df)] = row
     return df
 
 
@@ -35,102 +36,108 @@ def casa():
     return render_template('casa.html')
 
 
-@app.route('/Tabla1')
-def tabla():
-    # Inicializar listas vacías si no existen en la sesión
-    if 'Ques' not in session:
-        session['Ques'] = []
-    if 'Comos' not in session:
-        session['Comos'] = []
-    return render_template('Tabla1.html',
-                           Que=session['Ques'],
-                           Comos=session['Comos'])
-
-
-@app.route('/agregar_Que', methods=['POST'])
-def agregar_Que():
-    nuevo_Que = request.form.get('Que')
-    if nuevo_Que:
-        if 'Ques' not in session:
-            session['Ques'] = []
-        Ques = session['Ques']
-        if nuevo_Que not in Ques:
-            Ques.append(nuevo_Que)
-            session['Ques'] = Ques
-    return redirect(url_for('tabla'))
-
-
-@app.route('/agregar_Como', methods=['POST'])
-def agregar_Como():
-    nueva_Como = request.form.get('Como')
-    if nueva_Como:
-        if 'Comos' not in session:
-            session['Comos'] = []
-        Comos = session['Comos']
-        if nueva_Como not in Comos:
-            Comos.append(nueva_Como)
-            session['Comos'] = Comos
-    return redirect(url_for('tabla'))
-
-
-@app.route('/eliminar_Que', methods=['POST'])
-def eliminar_Que():
-    Que_a_eliminar = request.form.get('Que')
-    if Que_a_eliminar and 'Ques' in session:
-        session['Ques'] = [Que for Que in session['Ques']
-                           if Que != Que_a_eliminar]
-    return redirect(url_for('tabla'))
-
-
-@app.route('/eliminar_Como', methods=['POST'])
-def eliminar_Como():
-    Como_a_eliminar = request.form.get('Como')
-    if Como_a_eliminar and 'Comos' in session:
-        session['Comos'] = [Como for Como in session['Comos']
-                            if Como != Como_a_eliminar]
-    return redirect(url_for('tabla'))
+@app.route('/tabla_editable')
+def tabla_editable():
+    """Vista para mostrar la tabla generada"""
+    qfd_data = session.get('qfd_data', [])
+    return render_template('tabla_editable.html', qfd_data=qfd_data)
 
 
 @app.route('/generar_tabla', methods=['POST'])
 def generar_tabla():
-    # Obtener Ques y Comos de la sesión
-    Ques = session.get('Ques', [])
-    Comos = session.get('Comos', [])
+    try:
+        Ques = request.form.get('ques').split(',')
+        Comos = request.form.get('comos').split(',')
 
-    # Verificar si hay Ques y Comos
-    if not Ques or not Comos:
-        return redirect(url_for('tabla'))
+        # Validar que los datos sean correctos
+        if not Ques or not Comos:
+            return redirect(url_for('tabla_editable'))
 
-    # Crear nuevo DataFrame con los Ques y Comos actuales
-    df = initialize_dataframe(Ques, Comos)
-    df.to_excel(data_dir / 'matriz_qfd.xlsx', index=False)
+        # Crear la tabla
+        df = initialize_dataframe(Ques, Comos)
+        session['qfd_data'] = df.to_dict('records')
 
-    valores = df.to_dict('records')
-
-    return render_template('tabla_editable.html',
-                           Que=Ques,
-                           Comos=Comos,
-                           valores=valores)
+        return redirect(url_for('tabla_editable'))
+    except Exception as e:
+        return f"Error al generar la tabla: {str(e)}", 400
 
 
 @app.route('/guardar_tabla', methods=['POST'])
 def guardar_tabla():
     try:
-        data = request.get_json()
-        df = pd.DataFrame(data['valores'])
+        from openpyxl import Workbook
+        from openpyxl.styles import Alignment, Font, PatternFill
 
-        # Obtener las columnas actuales de la sesión
-        Comos = session.get('Comos', [])
-        required_columns = ['Ques'] + Comos + ['Resultado Interno']
+        # Obtener los valores de la tabla desde la sesión
+        qfd_data = session.get('qfd_data', [])
+        if not qfd_data:
+            return jsonify({'status': 'error', 'message': 'No hay datos para guardar'}), 400
 
-        # Asegurarse de que todas las columnas necesarias estén presentes
-        for col in required_columns:
-            if col not in df.columns:
-                df[col] = 0
+        # Obtener Ques y Comos desde los datos
+        Ques = [row['Ques'] for row in qfd_data]
+        Comos = list(qfd_data[0].keys())
+        Comos.remove('Ques')
+        Comos.remove('Total')
+        Comos.remove('Valor')
 
-        # Guardar el DataFrame
-        df.to_excel(data_dir / 'matriz_qfd.xlsx', index=False)
-        return jsonify({'status': 'success'})
+        # Crear un libro de Excel
+        excel_path = data_dir / 'matriz_qfd.xlsx'
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Matriz QFD"
+
+        # Escribir los encabezados de los Comos
+        for col, como in enumerate(Comos, start=2):
+            cell = ws.cell(row=1, column=col, value=como)
+            cell.font = Font(bold=True)
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.fill = PatternFill(
+                start_color="CCFFFF", end_color="CCFFFF", fill_type="solid")
+
+        # Escribir los encabezados adicionales (Total, Valor)
+        extra_headers = ["Total", "Valor"]
+        for col, header in enumerate(extra_headers, start=2 + len(Comos)):
+            cell = ws.cell(row=1, column=col, value=header)
+            cell.font = Font(bold=True)
+            cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.fill = PatternFill(
+                start_color="CCFFFF", end_color="CCFFFF", fill_type="solid")
+
+        # Escribir las filas de Ques y sus datos
+        for row, que in enumerate(Ques, start=2):
+            ws.cell(row=row, column=1, value=que).font = Font(bold=True)
+            for col, como in enumerate(Comos, start=2):
+                ws.cell(row=row, column=col,
+                        value=qfd_data[row - 2].get(como, 0))
+
+            # Escribir valores de Total y Valor
+            ws.cell(row=row, column=2 + len(Comos),
+                    value=qfd_data[row - 2].get('Total', 0))
+            ws.cell(row=row, column=3 + len(Comos),
+                    value=qfd_data[row - 2].get('Valor', 0))
+
+        # Ajustar tamaño de las columnas
+        for col in ws.columns:
+            max_length = 0
+            col_letter = col[0].column_letter
+            for cell in col:
+                try:
+                    if cell.value:
+                        max_length = max(max_length, len(str(cell.value)))
+                except:
+                    pass
+            ws.column_dimensions[col_letter].width = max_length + 2
+
+        # Guardar el archivo
+        if excel_path.exists():
+            excel_path.unlink()  # Elimina si ya existe
+        wb.save(excel_path)
+
+        return jsonify({
+            'status': 'success',
+            'redirect_url': url_for('tabla_editable'),
+            'message': 'Tabla guardada correctamente'
+        })
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 400
 
@@ -138,13 +145,18 @@ def guardar_tabla():
 @app.route('/descargar_excel')
 def descargar_excel():
     try:
+        file_path = data_dir / 'matriz_qfd.xlsx'  # Ruta del archivo generado
+        if not file_path.exists():
+            return "Archivo no encontrado. Asegúrate de haber generado la tabla antes de descargar.", 400
+
         return send_file(
-            data_dir / 'matriz_qfd.xlsx',
+            file_path,
             as_attachment=True,
-            download_name='matriz_qfd.xlsx'
+            download_name='matriz_qfd1.xlsx',
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
     except Exception as e:
-        return str(e), 400
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':
