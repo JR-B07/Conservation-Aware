@@ -1,43 +1,88 @@
-{% extends "base.html" %} {% block title %}Los QFD{% endblock %} {% block hero
-%}
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-        <h1 class="text-center mb-5" style="color: #1a237e">LOS QFD</h1>
+{% extends "base.html" %} {% block title %}Los QFD - Casa de la Calidad{%
+endblock %} {% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <h1 class="text-center mb-5" style="color: #0056b3">¿QUÉ ES QFD?</h1>
 
-        <div class="row">
-          <div class="col-md-6">
-            <p class="lead" style="text-align: justify">
-              EL <STRONG>QFD (DESPLIEGUE DE LA FUNCIÓN DE CALIDAD)</STRONG>, POR
-              SUS SIGLAS EN INGLÉS <EM>"QUALITY FUNCTION DEPLOYMENT"</EM>, ES UNA
-              METODOLOGÍA PARA TRANSFORMAR LAS NECESIDADES Y EXPECTATIVAS DE LOS
-              CLIENTES EN CARACTERÍSTICAS ESPECÍFICAS DEL PRODUCTO O SERVICIO.
+      <div class="content-section">
+        <p class="lead" style="text-align: justify">
+          El <strong>Quality Function Deployment (QFD)</strong> o Despliegue de
+          la Función de Calidad es una metodología sistemática que permite
+          identificar y traducir los requisitos del cliente en especificaciones
+          técnicas apropiadas para cada etapa del desarrollo del producto o
+          servicio.
+        </p>
+
+        <h3 class="mt-4 mb-3" style="color: #0056b3">
+          Componentes Principales de QFD:
+        </h3>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">1. QUÉs (Voz del Cliente)</h5>
+            <p class="card-text">
+              Son los requisitos y expectativas del cliente, expresados en su
+              propio lenguaje.
             </p>
-
-            <div class="mt-4">
-              <h4 style="color: #1a237e">Objetivo del QFD:</h4>
-              <p class="lead" style="text-align: justify">
-                ASEGURAR QUE LA VOZ DEL CLIENTE SE TRADUZCA EN CADA FASE DEL
-                DESARROLLO, DESDE EL DISEÑO HASTA LA PRODUCCIÓN Y ENTREGA.
-                TAMBIÉN BUSCA MEJORAR LA SATISFACCIÓN DEL CLIENTE AL CREAR
-                PRODUCTOS MÁS ALINEADOS CON SUS DESEOS Y NECESIDADES.
-              </p>
-            </div>
           </div>
+        </div>
 
-          <div class="col-md-6">
-            <img
-              src="https://www.shutterstock.com/shutterstock/photos/2005532984/display_1500/stock-vector-qfd-quality-function-deployment-acronym-business-concept-background-vector-illustration-2005532984.jpg"
-              alt="QFD - Quality Function Deployment"
-              alt="Diagrama QFD"
-              class="img-fluid rounded shadow-lg"
-              style="max-width: 100%; height: auto"
-            />
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">2. CÓMOs (Características Técnicas)</h5>
+            <p class="card-text">
+              Son las especificaciones técnicas que permiten satisfacer los
+              QUÉs.
+            </p>
           </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">3. Matriz de Relaciones</h5>
+            <p class="card-text">
+              Muestra la fuerza de la relación entre cada QUÉ y cada CÓMO.
+            </p>
+            <ul>
+              <li>Relación Fuerte (9): Impacto significativo</li>
+              <li>Relación Media (3): Impacto moderado</li>
+              <li>Relación Débil (1): Impacto ligero</li>
+              <li>Sin Relación (0): No hay impacto</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">4. Importancia y Evaluación</h5>
+            <p class="card-text">
+              Cada requerimiento del cliente tiene un nivel de importancia (1-5)
+              y una evaluación competitiva.
+            </p>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">5. Resultados y Priorización</h5>
+            <p class="card-text">
+              Se calculan importancias absolutas y relativas para priorizar
+              características técnicas.
+            </p>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a
+            href="{{ url_for('tabla_editable') }}"
+            class="btn btn-primary btn-lg"
+          >
+            Crear Nueva Matriz QFD
+          </a>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 {% endblock %}

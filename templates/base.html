@@ -8,70 +8,210 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      .navbar-custom {
-        background: linear-gradient(to right, #f8a488, #b497d6, #89d6c5);
-        padding: 1rem;
+      /* Estilos generales */
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f8f9fa;
+        color: #2c3e50;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
 
-      .navbar-custom .navbar-brand,
-      .navbar-custom .nav-link {
+      /* Navbar mejorado */
+      .navbar-custom {
+        background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+        padding: 1rem;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .navbar-custom .navbar-brand {
         color: #ffffff;
-        font-weight: bold;
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .navbar-custom .nav-link {
+        color: #ffffff !important;
+        font-weight: 500;
+        padding: 0.5rem 1.2rem;
+        margin: 0 0.3rem;
+        border-radius: 25px;
+        transition: all 0.3s ease;
       }
 
       .navbar-custom .nav-link:hover {
-        color: #ffd700;
-        transition: color 0.3s ease;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
       }
 
-      body {
-        background-color: #f0f4f8;
-        min-height: 100vh;
-      }
-
-      .title-section {
-        background-color: #d1b3ff;
-        text-align: center;
-        padding: 50px;
-        color: #000000;
-        font-weight: bold;
-        width: 50%;
-        margin: 30px auto;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
+      /* Hero Section mejorado */
       .hero-section {
-        background-image: url("https://t3.ftcdn.net/jpg/05/39/50/90/360_F_539509042_PAopjCwVkbwKc8jYzPNhVYUQLGFfCrYM.jpg");
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("https://t3.ftcdn.net/jpg/05/39/50/90/360_F_539509042_PAopjCwVkbwKc8jYzPNhVYUQLGFfCrYM.jpg");
         background-size: cover;
         background-position: center;
-        height: 100vh;
+        background-attachment: fixed;
+        height: 80vh;
         display: flex;
         justify-content: center;
         align-items: center;
         color: white;
         text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        padding: 2rem;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        transform: translateY(20px);
+        animation: fadeInUp 1s ease forwards;
+      }
+
+      .hero-content h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
         margin-bottom: 2rem;
       }
 
-      .navbar-toggler {
-        border-color: rgba(255, 255, 255, 0.5);
+      /* Título sección mejorado */
+      .title-section {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        text-align: center;
+        padding: 3rem;
+        color: white;
+        margin: 2rem auto;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-50px);
+        max-width: 800px;
       }
 
-      .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      .title-section h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
       }
 
+      /* Contenedor principal mejorado */
       .main-container {
-        padding: 2rem 0;
+        flex: 1;
+        padding: 3rem 0;
+        position: relative;
+        z-index: 1;
+      }
+
+      .content-wrapper {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+        margin-top: 2rem;
+      }
+
+      /* Animaciones */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Cards mejoradas */
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 1.5rem;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-body {
+        padding: 2rem;
+      }
+
+      .card-title {
+        color: #1a2a6c;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      /* Botones mejorados */
+      .btn-custom {
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+      }
+
+      .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero-content h1 {
+          font-size: 2.5rem;
+        }
+
+        .title-section {
+          margin: 1rem;
+          padding: 2rem;
+        }
+
+        .navbar-custom .nav-link {
+          margin: 0.5rem 0;
+        }
       }
     </style>
   </head>
+
   <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('index') }}">INICIO</a>
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+          <i class="fas fa-home"></i> INICIO
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -86,36 +226,64 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('LosQFD') }}">LOS QFD</a>
+              <a class="nav-link" href="{{ url_for('LosQFD') }}">
+                <i class="fas fa-chart-bar"></i> LOS QFD
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('casa') }}">CASA</a>
+              <a class="nav-link" href="{{ url_for('casa') }}">
+                <i class="fas fa-home"></i> CASA
+              </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('tabla_editable') }}"
-                >CREAR TABLA</a
-              >
+              <a class="nav-link" href="{{ url_for('tabla_editable') }}">
+                <i class="fas fa-table"></i> CREAR TABLA
+              </a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    {% block hero %}
-    <div class="title-section">
-      <h1>¡BIENVENIDO A LA CASA DE LA CALIDAD!</h1>
-    </div>
-
+    <!-- Contenido específico de la página de inicio -->
+    {% if request.endpoint == 'index' %}
     <div class="hero-section">
-      <div class="container">
-        <h1>{% block hero_title %}{% endblock %}</h1>
+      <div class="hero-content">
+        <h1>Casa de la Calidad</h1>
+        <p class="lead">
+          Transformando los requisitos del cliente en soluciones excepcionales
+        </p>
+        <a href="{{ url_for('tabla_editable') }}" class="btn btn-custom btn-lg">
+          Comenzar Ahora <i class="fas fa-arrow-right ml-2"></i>
+        </a>
       </div>
     </div>
-    {% endblock %}
+    {% endif %}
 
+    <!-- Contenedor principal para el contenido de cada página -->
     <div class="main-container">
-      <div class="container">{% block content %}{% endblock %}</div>
+      <div class="container content-wrapper">
+        {% block content %}{% endblock %}
+      </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>Casa de la Calidad</h5>
+            <p>
+              Herramienta para la excelencia en el desarrollo de productos y
+              servicios.
+            </p>
+          </div>
+          <div class="col-md-6 text-md-right">
+            <p>© 2024 Casa de la Calidad. Todos los derechos reservados.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

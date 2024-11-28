@@ -1,6 +1,114 @@
 {% extends "base.html" %} {% block title %}Inicio - Casa de la Calidad{%
 endblock %} {% block hero_title %}{% endblock %} {% block content %}
-<div class="row">
-  <div class="col-12 text-center"></div>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Sección de Características -->
+    <div class="col-12">
+      <h2 class="text-center mb-5">Características Principales</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-users fa-3x mb-3" style="color: #667eea"></i>
+              <h5 class="card-title">Enfoque en el Cliente</h5>
+              <p class="card-text">
+                Traduce las necesidades del cliente en especificaciones técnicas
+                precisas.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i
+                class="fas fa-chart-line fa-3x mb-3"
+                style="color: #764ba2"
+              ></i>
+              <h5 class="card-title">Análisis Detallado</h5>
+              <p class="card-text">
+                Proporciona una visión clara de las relaciones entre requisitos
+                y soluciones.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-cogs fa-3x mb-3" style="color: #b21f1f"></i>
+              <h5 class="card-title">Optimización</h5>
+              <p class="card-text">
+                Mejora la toma de decisiones y la asignación de recursos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de Proceso -->
+    <div class="col-12 mt-5">
+      <h2 class="text-center mb-5">Proceso de Desarrollo</h2>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="display-4 mb-3">1</div>
+              <h5 class="card-title">Identificación</h5>
+              <p class="card-text">Recopilación de requisitos del cliente</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="display-4 mb-3">2</div>
+              <h5 class="card-title">Análisis</h5>
+              <p class="card-text">Evaluación y priorización de necesidades</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="display-4 mb-3">3</div>
+              <h5 class="card-title">Correlación</h5>
+              <p class="card-text">Establecimiento de relaciones técnicas</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div class="display-4 mb-3">4</div>
+              <h5 class="card-title">Resultados</h5>
+              <p class="card-text">
+                Obtención de prioridades y planes de acción
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Llamada a la acción -->
+    <div class="col-12 text-center mt-5">
+      <div class="card bg-gradient-primary">
+        <div class="card-body py-5">
+          <h3 class="card-title">¿Listo para comenzar?</h3>
+          <p class="card-text mb-4">
+            Crea tu primera matriz QFD y mejora la calidad de tus productos
+          </p>
+          <a
+            href="{{ url_for('tabla_editable') }}"
+            class="btn btn-custom btn-lg"
+          >
+            Crear Nueva Matriz <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
