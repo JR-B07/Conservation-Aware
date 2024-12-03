@@ -33,10 +33,10 @@ content %}
         <thead>
           <tr>
             <th class="bg-success text-white" style="width: 200px">
-              PRIORIDAD
+              QUE'S / COMO'S ->
             </th>
             <th class="text-center prioridad-header" style="width: 80px">
-              Importancia
+              PRIORIDAD
             </th>
             {% for como in qfd_data.Comos %}
             <th class="text-center bg-light" style="width: 120px">
@@ -64,13 +64,6 @@ content %}
             {% endfor %}
           </tr>
           {% endfor %}
-          <tr class="table-success">
-            <th>Resultados internos</th>
-            <td class="text-center">-</td>
-            {% for como in qfd_data.Comos %}
-            <td class="text-center resultado-interno">0</td>
-            {% endfor %}
-          </tr>
           <tr class="bg-light">
             <th>IMPORTANCIA</th>
             <td class="text-center">-</td>
@@ -130,15 +123,13 @@ content %}
     });
 
     function calcularResultados() {
-      const filas = document.querySelectorAll(
-        "tbody tr:not(.table-success):not(.bg-light)"
-      );
+      const filas = document.querySelectorAll("tbody tr:not(.bg-light)");
       const numColumnas = document.querySelectorAll(
         '.valor-celda[data-como="0"]'
       ).length;
-      let resultados = new Array(numColumnas).fill(0);
+      let importanciaTotal = new Array(numColumnas).fill(0);
 
-      // Calcular resultados internos
+      // Calcular importancia total
       filas.forEach((fila) => {
         const importancia =
           parseFloat(fila.querySelector(".importancia-celda").textContent) || 0;
@@ -148,19 +139,15 @@ content %}
           const valor = parseFloat(celda.textContent) || 0;
           const resultado = valor * importancia;
           celda.textContent = valor; // Mantener el valor original
-          resultados[index] += resultado;
+          importanciaTotal[index] += resultado;
         });
       });
-      // Agrega esto dentro del script existente, justo después de la función calcularResultados()
 
       // Función para obtener todos los datos de la matriz
       function obtenerDatosMatriz() {
-        const filas = document.querySelectorAll(
-          "tbody tr:not(.table-success):not(.bg-light)"
-        );
+        const filas = document.querySelectorAll("tbody tr:not(.bg-light)");
         const matriz = [];
         const importancia = [];
-        const resultadosInternos = [];
         const importanciaTotal = [];
         const importanciaRelativa = [];
 
@@ -179,11 +166,6 @@ content %}
           matriz.push(valoresFila);
         });
 
-        // Obtener resultados internos
-        document.querySelectorAll(".resultado-interno").forEach((celda) => {
-          resultadosInternos.push(parseFloat(celda.textContent) || 0);
-        });
-
         // Obtener importancia total
         document.querySelectorAll(".importancia-total").forEach((celda) => {
           importanciaTotal.push(parseFloat(celda.textContent) || 0);
@@ -196,16 +178,13 @@ content %}
 
         return {
           Ques: Array.from(
-            document.querySelectorAll(
-              "tbody tr:not(.table-success):not(.bg-light) th"
-            )
+            document.querySelectorAll("tbody tr:not(.bg-light) th")
           ).map((th) => th.textContent),
           Comos: Array.from(document.querySelectorAll("thead th"))
             .slice(2)
             .map((th) => th.textContent),
           matriz: matriz,
           importancia: importancia,
-          resultados_internos: resultadosInternos,
           importancia_total: importanciaTotal,
           importancia_relativa: importanciaRelativa,
         };
@@ -245,26 +224,23 @@ content %}
           }
         });
       }
-      // Actualizar resultados internos
-      document
-        .querySelectorAll(".resultado-interno")
-        .forEach((celda, index) => {
-          celda.textContent = resultados[index];
-        });
 
       // Actualizar importancia total
       document
         .querySelectorAll(".importancia-total")
         .forEach((celda, index) => {
-          celda.textContent = resultados[index];
+          celda.textContent = importanciaTotal[index];
         });
 
       // Calcular y actualizar importancia relativa
-      const totalImportancia = resultados.reduce((a, b) => a + b, 0);
+      const maxImportanciaTotal = Math.max(...importanciaTotal);
       document
         .querySelectorAll(".importancia-relativa")
         .forEach((celda, index) => {
-          const relativa = (resultados[index] / totalImportancia) * 100 || 0;
+          const relativa =
+            maxImportanciaTotal > 0
+              ? (10 * importanciaTotal[index]) / maxImportanciaTotal
+              : 0;
           celda.textContent = relativa.toFixed(2);
         });
     }
@@ -305,7 +281,6 @@ content %}
     outline: none;
   }
 
-  .resultado-interno,
   .importancia-total,
   .importancia-relativa {
     font-weight: bold;

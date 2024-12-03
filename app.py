@@ -16,8 +16,7 @@ def initialize_qfd_data(Ques, Comos):
         'Ques': Ques,
         'Comos': Comos,
         'matriz': [[0 for _ in Comos] for _ in Ques],
-        'importancia': [1 for _ in Ques],
-        'resultados_internos': [0 for _ in Comos],
+        'importancia': [1 for _ in Ques],  # Cambié 'prioridad' a 'importancia'
         'importancia_total': [0 for _ in Comos],
         'importancia_relativa': [0.0 for _ in Comos]
     }
@@ -46,7 +45,6 @@ def tabla_editable():
         'Comos': [],
         'matriz': [],
         'importancia': [],
-        'resultados_internos': [],
         'importancia_total': [],
         'importancia_relativa': []
     })
@@ -116,12 +114,11 @@ def exportar_qfd():
         center_align = Alignment(horizontal='center', vertical='center')
 
         # Encabezados
-        ws['A1'] = "PRIORIDAD"
+        ws['A1'] = "QUÉS"
         ws['A1'].fill = header_fill
         ws['A1'].font = bold_font
-        ws['B1'] = "Importancia"
+        ws['B1'] = "PRIORIDAD"
         ws['B1'].fill = light_fill
-        ws['B1'].font = bold_font
 
         # CÓMOs
         for col, como in enumerate(qfd_data['Comos'], start=3):
@@ -147,25 +144,21 @@ def exportar_qfd():
 
         # Filas de resultados
         row_resultados = len(qfd_data['Ques']) + 2
-        ws.cell(row=row_resultados, column=1,
-                value="Resultados internos").fill = light_fill
         ws.cell(row=row_resultados + 1, column=1,
                 value="IMPORTANCIA").fill = light_fill
         ws.cell(row=row_resultados + 2, column=1,
                 value="IMPORTANCIA RELATIVA").fill = light_fill
 
         # Valores de resultados
-        for col, (res, imp, rel) in enumerate(zip(
-            qfd_data['resultados_internos'],
+        for col, (imp, rel) in enumerate(zip(
             qfd_data['importancia_total'],
             qfd_data['importancia_relativa']
         ), start=3):
-            ws.cell(row=row_resultados, column=col,
-                    value=res).alignment = center_align
+
             ws.cell(row=row_resultados + 1, column=col,
                     value=imp).alignment = center_align
             ws.cell(row=row_resultados + 2, column=col,
-                    value=f"{rel:.2f}%").alignment = center_align
+                    value=f"{rel:.2f}").alignment = center_align
 
         # Ajustar anchos de columna
         ws.column_dimensions['A'].width = 25
